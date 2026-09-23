@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>🐟 LIVE GREAT LAKES FISH ACOUSTIC TELEMETRY RECEIVERS</name>
+    <Style id="fishReceiver">
+      <IconStyle>
+        <scale>1.0</scale>
+        <Icon>
+          <href>../icons/fish_receiver.png</href>
+        </Icon>
+      </IconStyle>
+    </Style>
+    <Placemark>
+      <name>[ONLINE] LSR-021</name>
+      <styleUrl>#fishReceiver</styleUrl>
+      <description><![CDATA[🐟 LIVE ACOUSTIC TELEMETRY RECEIVER
+
+Receiver: LSR-021
+Status: ONLINE
+Last source update: 2026-09-23 10:00:00 (source tz, see source)
+Last fish detection: 2026-09-23 09:55:00
+Reporting period: previous 24 h ending 2026-09-23 10:00:00
+
+FISH DETECTIONS (live TagID level; species attribution via RAFT/subscription)
+Unique tags (24 h): 2 / detection events (24 h): 60
+A69-1601-62016: 42 detections (tag detection events, NOT fish)
+A69-1601-62032: 18 detections (tag detection events, NOT fish)
+
+RECEIVER
+Receiver ID: GLATOS-LSR-021
+Network: USGS Real-Time Fish Telemetry + GLATOS/OTN deployments
+Array: LSR, SBI
+Waterbody: Great Lakes basin / connected waters
+Coordinates: 41.352640, -83.111290 (USGS data release Receiver_locs.csv (DOI 10.5066/P13H22V6))
+
+SOURCE
+https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/
+https://doi.org/10.5066/P13H22V6
+https://doi.org/10.5066/P142JQOJ]]></description>
+      <Point>
+        <coordinates>-83.111290,41.352640,0</coordinates>
+      </Point>
+    </Placemark>
+  </Document>
+</kml>

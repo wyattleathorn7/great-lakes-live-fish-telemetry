@@ -1,0 +1,51 @@
+{
+  "generated_utc": "2026-09-23T16:16:01.113570+00:00",
+  "live_version": "2026-09-23 10:30 CDT|05536890:2026-09-23 08:55:00 CST|05536995:2026-09-23 09:00:00 CST|05538010:2026-09-18 03:00:00 CST|05538020:2026-09-23 09:10:00 CST|05541498:2026-09-23 09:00:00 CST|404721091043701:Removed for season|411133091003401:2026-09-23 08:55:00 CST|411333091051000:2026-09-23 08:55:00 CST|411955088280601:2026-09-23 09:05:00 CST|412109083063800:2026-09-23 10:00:00 EST|412341088161001:2026-09-23 09:00:00 CST|412618083021701:2026-09-23 09:55:00 EST|412652509111316:2026-09-23 09:00:00 CST|412957090371001:Removed for season|None:Discontinued|None:Discontinued|None:Discontinued|None:Discontinued",
+  "expected_update_hours": 1.0,
+  "stale_after_hours": 30.0,
+  "dedupe": {
+    "exact_merges": 456,
+    "proximity_merges_150m": 707
+  },
+  "excluded_no_coords": [
+    {
+      "name": "BIG TIMBER BACKWATER (P17) NEAR PORT LOUISA, IA",
+      "sid": "412652509111316",
+      "reason": "no authoritative coordinates"
+    },
+    {
+      "name": "HANSON GRAVEL EAST PIT_01 NR MORRIS, IL",
+      "sid": null,
+      "reason": "no authoritative coordinates"
+    },
+    {
+      "name": "ILLINOIS RIVER BELOW STARVED ROCK LOCK AND DAM AT UTICA, IL",
+      "sid": null,
+      "reason": "no authoritative coordinates"
+    },
+    {
+      "name": "MAUMEE RIVER (RIGHT BANK) AT PERRYSBURG, OH",
+      "sid": null,
+      "reason": "no authoritative coordinates"
+    },
+    {
+      "name": "MAUMEE BAY NR TOLEDO, OH",
+      "sid": null,
+      "reason": "no authoritative coordinates"
+    }
+  ],
+  "otn_error": "",
+  "sources": {
+    "USGS_live": "https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/",
+    "GLATOS_redhorse": "https://doi.org/10.5066/P13H22V6",
+    "GLATOS_sturgeon_HEC": "https://doi.org/10.5066/P142JQOJ",
+    "OTN_ERDDAP": "https://erddap.oceantrack.org/erddap/tabledap/view_otn_aat_receivers"
+  },
+  "consulted_not_used": {
+    "GLATOS_portal": "members-only login; no public bulk receiver file",
+    "RAFT_map": "web app only; no public bulk receiver API found",
+    "MI_DNR_Macatawa": "8 receivers announced without public coordinates",
+    "USGS_salmon_10.5066/P1A8ZLWV": "no receiver-location table in release",
+    "USGS_whitefish_10.5066/P9CWKQ4D": "no receiver-location table in release"
+  }
+}
