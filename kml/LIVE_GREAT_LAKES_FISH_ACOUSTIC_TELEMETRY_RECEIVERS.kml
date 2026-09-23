@@ -102509,7 +102509,7 @@ Status: OFFLINE
 
 Current live detections: UNAVAILABLE
 Last live update: 2026-09-18 03:00:00 CST
-Reason: Feed stale: last source update 127.3 h ago (threshold 30.0 h)
+Reason: Feed stale: last source update 127.5 h ago (threshold 30.0 h)
 
 RECEIVER
 Receiver ID: USGS-LIVE-05538010

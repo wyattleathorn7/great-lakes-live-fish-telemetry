@@ -19,7 +19,7 @@
       "GLATOS/sturgeon-HEC",
       "USGS/live"
     ],
-    "status_timestamp": "2026-09-23T16:16:01.113570+00:00"
+    "status_timestamp": "2026-09-23T16:30:22.062384+00:00"
   },
   {
     "current_status": "ONLINE",
@@ -41,7 +41,7 @@
       "GLATOS/sturgeon-HEC",
       "USGS/live"
     ],
-    "status_timestamp": "2026-09-23T16:16:01.113570+00:00"
+    "status_timestamp": "2026-09-23T16:30:22.062384+00:00"
   },
   {
     "current_status": "ONLINE",
@@ -59,7 +59,7 @@
     "sources": [
       "USGS/live"
     ],
-    "status_timestamp": "2026-09-23T16:16:01.113570+00:00"
+    "status_timestamp": "2026-09-23T16:30:22.062384+00:00"
   },
   {
     "current_status": "ONLINE",
@@ -77,14 +77,14 @@
     "sources": [
       "USGS/live"
     ],
-    "status_timestamp": "2026-09-23T16:16:01.113570+00:00"
+    "status_timestamp": "2026-09-23T16:30:22.062384+00:00"
   },
   {
     "current_status": "OFFLINE",
     "latitude": 41.505,
     "longitude": -88.0997222,
     "network": "USGS Real-Time Fish Telemetry",
-    "reason": "Feed stale: last source update 127.3 h ago (threshold 30.0 h)",
+    "reason": "Feed stale: last source update 127.5 h ago (threshold 30.0 h)",
     "receiver_id": "USGS-LIVE-05538010",
     "receiver_name": "DES PLAINES RIVER ABOVE BRANDON ROAD LOCK AND DAM AT ROCKDALE, IL",
     "source_update_time": "2026-09-18 03:00:00 CST",
@@ -95,7 +95,7 @@
     "sources": [
       "USGS/live"
     ],
-    "status_timestamp": "2026-09-23T16:16:01.113570+00:00"
+    "status_timestamp": "2026-09-23T16:30:22.062384+00:00"
   },
   {
     "current_status": "ONLINE",
@@ -113,7 +113,7 @@
     "sources": [
       "USGS/live"
     ],
-    "status_timestamp": "2026-09-23T16:16:01.113570+00:00"
+    "status_timestamp": "2026-09-23T16:30:22.062384+00:00"
   },
   {
     "current_status": "ONLINE",
@@ -131,7 +131,7 @@
     "sources": [
       "USGS/live"
     ],
-    "status_timestamp": "2026-09-23T16:16:01.113570+00:00"
+    "status_timestamp": "2026-09-23T16:30:22.062384+00:00"
   },
   {
     "current_status": "ONLINE",
@@ -149,7 +149,7 @@
     "sources": [
       "USGS/live"
     ],
-    "status_timestamp": "2026-09-23T16:16:01.113570+00:00"
+    "status_timestamp": "2026-09-23T16:30:22.062384+00:00"
   },
   {
     "current_status": "ONLINE",
@@ -167,7 +167,7 @@
     "sources": [
       "USGS/live"
     ],
-    "status_timestamp": "2026-09-23T16:16:01.113570+00:00"
+    "status_timestamp": "2026-09-23T16:30:22.062384+00:00"
   },
   {
     "current_status": "ONLINE",
@@ -185,7 +185,7 @@
     "sources": [
       "USGS/live"
     ],
-    "status_timestamp": "2026-09-23T16:16:01.113570+00:00"
+    "status_timestamp": "2026-09-23T16:30:22.062384+00:00"
   },
   {
     "current_status": "ONLINE",
@@ -203,7 +203,7 @@
     "sources": [
       "USGS/live"
     ],
-    "status_timestamp": "2026-09-23T16:16:01.113570+00:00"
+    "status_timestamp": "2026-09-23T16:30:22.062384+00:00"
   },
   {
     "current_status": "OFFLINE",
@@ -221,7 +221,7 @@
     "sources": [
       "USGS/live"
     ],
-    "status_timestamp": "2026-09-23T16:16:01.113570+00:00"
+    "status_timestamp": "2026-09-23T16:30:22.062384+00:00"
   },
   {
     "current_status": "OFFLINE",
@@ -239,6 +239,6 @@
     "sources": [
       "USGS/live"
     ],
-    "status_timestamp": "2026-09-23T16:16:01.113570+00:00"
+    "status_timestamp": "2026-09-23T16:30:22.062384+00:00"
   }
 ]
