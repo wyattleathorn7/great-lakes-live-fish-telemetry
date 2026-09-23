@@ -1,20 +1,20 @@
 [
   {
-    "detection_events_24h": 60,
+    "detection_events_24h": 63,
     "receiver_id": "GLATOS-LSR-021",
     "reporting_period": "previous 24 h",
     "tag_counts": {
-      "A69-1601-62016": 42,
+      "A69-1601-62016": 45,
       "A69-1601-62032": 18
     },
     "unique_tags_24h": 2
   },
   {
-    "detection_events_24h": 432,
+    "detection_events_24h": 433,
     "receiver_id": "GLATOS-LSR-002",
     "reporting_period": "previous 24 h",
     "tag_counts": {
-      "A69-1601-62477": 137,
+      "A69-1601-62477": 138,
       "A69-1601-62489": 132,
       "A69-1601-62531": 135,
       "A69-9004-3477": 15
@@ -22,17 +22,17 @@
     "unique_tags_24h": 4
   },
   {
-    "detection_events_24h": 129,
+    "detection_events_24h": 130,
     "receiver_id": "USGS-LIVE-05536890",
     "reporting_period": "previous 24 h",
     "tag_counts": {
       "A69-1602-61435": 1,
-      "A69-1602-65025": 128
+      "A69-1602-65025": 129
     },
     "unique_tags_24h": 2
   },
   {
-    "detection_events_24h": 1255,
+    "detection_events_24h": 1233,
     "receiver_id": "USGS-LIVE-05536995",
     "reporting_period": "previous 24 h",
     "tag_counts": {
@@ -40,22 +40,22 @@
       "A69-1601-62872": 61,
       "A69-9001-45034": 13,
       "A69-9001-64219": 5,
-      "A69-9001-64222": 16,
-      "A69-9001-64280": 12,
-      "A69-9001-64293": 173,
-      "A69-9001-64296": 151,
-      "A69-9001-64298": 250,
+      "A69-9001-64222": 19,
+      "A69-9001-64280": 13,
+      "A69-9001-64293": 164,
+      "A69-9001-64296": 148,
+      "A69-9001-64298": 247,
       "A69-9001-64415": 1,
       "A69-9001-64416": 1
     },
     "unique_tags_24h": 11
   },
   {
-    "detection_events_24h": 142,
+    "detection_events_24h": 141,
     "receiver_id": "USGS-LIVE-05538020",
     "reporting_period": "previous 24 h",
     "tag_counts": {
-      "A69-1601-62623": 142
+      "A69-1601-62623": 141
     },
     "unique_tags_24h": 1
   },
@@ -70,48 +70,48 @@
     "unique_tags_24h": 2
   },
   {
-    "detection_events_24h": 1604,
+    "detection_events_24h": 1584,
     "receiver_id": "USGS-LIVE-05541498",
     "reporting_period": "previous 24 h",
     "tag_counts": {
-      "A69-9001-45020": 261,
-      "A69-9001-45042": 253,
-      "A69-9001-45079": 100,
-      "A69-9001-45080": 72,
-      "A69-9001-64385": 10,
-      "A69-9001-64434": 192
+      "A69-9001-45020": 262,
+      "A69-9001-45042": 251,
+      "A69-9001-45079": 96,
+      "A69-9001-45080": 68,
+      "A69-9001-64385": 11,
+      "A69-9001-64434": 193
     },
     "unique_tags_24h": 6
   },
   {
-    "detection_events_24h": 1379,
+    "detection_events_24h": 1382,
     "receiver_id": "USGS-LIVE-411955088280601",
     "reporting_period": "previous 24 h",
     "tag_counts": {
-      "A69-1601-62867": 125,
+      "A69-1601-62867": 126,
       "A69-1604-29064": 288,
       "A69-1604-29071": 6
     },
     "unique_tags_24h": 3
   },
   {
-    "detection_events_24h": 1163,
+    "detection_events_24h": 1147,
     "receiver_id": "USGS-LIVE-411333091051000",
     "reporting_period": "previous 24 h",
     "tag_counts": {
-      "A69-9001-58610": 274,
+      "A69-9001-58610": 271,
       "A69-9001-58625": 2,
       "A69-9001-58635": 274
     },
     "unique_tags_24h": 3
   },
   {
-    "detection_events_24h": 295,
+    "detection_events_24h": 305,
     "receiver_id": "USGS-LIVE-411133091003401",
     "reporting_period": "previous 24 h",
     "tag_counts": {
-      "A69-9001-12690": 75,
-      "A69-9001-58485": 84,
+      "A69-9001-12690": 72,
+      "A69-9001-58485": 91,
       "A69-9001-58501": 16,
       "A69-9001-58617": 2,
       "A69-9001-58712": 14,
