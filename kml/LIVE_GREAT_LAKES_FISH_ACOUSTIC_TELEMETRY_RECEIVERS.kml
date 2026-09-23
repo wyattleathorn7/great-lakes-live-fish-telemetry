@@ -51548,15 +51548,15 @@ https://erddap.oceantrack.org/erddap/tabledap/view_otn_aat_receivers]]></descrip
 
 Receiver: LSR-002
 Status: ONLINE
-Last source update: 2026-09-23 14:55:00 (source tz, see source)
-Last fish detection: 2026-09-23 14:55:00
-Reporting period: previous 24 h ending 2026-09-23 14:55:00
+Last source update: 2026-09-23 15:55:00 (source tz, see source)
+Last fish detection: 2026-09-23 15:55:00
+Reporting period: previous 24 h ending 2026-09-23 15:55:00
 
 FISH DETECTIONS (live TagID level; species attribution via RAFT/subscription)
-Unique tags (24 h): 4 / detection events (24 h): 432
-A69-1601-62477: 135 detections (tag detection events, NOT fish)
+Unique tags (24 h): 4 / detection events (24 h): 430
+A69-1601-62477: 134 detections (tag detection events, NOT fish)
 A69-1601-62489: 134 detections (tag detection events, NOT fish)
-A69-1601-62531: 135 detections (tag detection events, NOT fish)
+A69-1601-62531: 134 detections (tag detection events, NOT fish)
 A69-9004-3477: 15 detections (tag detection events, NOT fish)
 
 RECEIVER
@@ -51782,9 +51782,9 @@ https://erddap.oceantrack.org/erddap/tabledap/view_otn_aat_receivers]]></descrip
 
 Receiver: LSR-021
 Status: ONLINE
-Last source update: 2026-09-23 15:00:00 (source tz, see source)
+Last source update: 2026-09-23 16:00:00 (source tz, see source)
 Last fish detection: 2026-09-23 13:00:00
-Reporting period: previous 24 h ending 2026-09-23 15:00:00
+Reporting period: previous 24 h ending 2026-09-23 16:00:00
 
 FISH DETECTIONS (live TagID level; species attribution via RAFT/subscription)
 Unique tags (24 h): 2 / detection events (24 h): 71
@@ -102441,13 +102441,13 @@ https://erddap.oceantrack.org/erddap/tabledap/view_otn_aat_receivers]]></descrip
 
 Receiver: CHICAGO SANITARY AND SHIP CANAL NR LEMONT, IL
 Status: ONLINE
-Last source update: 2026-09-23 13:55:00 (source tz, see source)
-Last fish detection: 2026-09-23 13:50:00
-Reporting period: previous 24 h ending 2026-09-23 13:55:00
+Last source update: 2026-09-23 14:55:00 (source tz, see source)
+Last fish detection: 2026-09-23 14:50:00
+Reporting period: previous 24 h ending 2026-09-23 14:55:00
 
 FISH DETECTIONS (live TagID level; species attribution via RAFT/subscription)
-Unique tags (24 h): 1 / detection events (24 h): 128
-A69-1602-65025: 128 detections (tag detection events, NOT fish)
+Unique tags (24 h): 1 / detection events (24 h): 127
+A69-1602-65025: 127 detections (tag detection events, NOT fish)
 
 RECEIVER
 Receiver ID: USGS-LIVE-05536890
@@ -102468,21 +102468,21 @@ https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/]]></description>
 
 Receiver: CHICAGO SANITARY AND SHIP CANAL BELOW FISH BARRIER AT ROMEOVILLE, IL
 Status: ONLINE
-Last source update: 2026-09-23 14:00:00 (source tz, see source)
-Last fish detection: 2026-09-23 14:00:00
-Reporting period: previous 24 h ending 2026-09-23 14:00:00
+Last source update: 2026-09-23 15:00:00 (source tz, see source)
+Last fish detection: 2026-09-23 15:00:00
+Reporting period: previous 24 h ending 2026-09-23 15:00:00
 
 FISH DETECTIONS (live TagID level; species attribution via RAFT/subscription)
-Unique tags (24 h): 11 / detection events (24 h): 1213
-A69-1601-62592: 102 detections (tag detection events, NOT fish)
+Unique tags (24 h): 11 / detection events (24 h): 1236
+A69-1601-62592: 101 detections (tag detection events, NOT fish)
 A69-1601-62872: 61 detections (tag detection events, NOT fish)
-A69-9001-45034: 11 detections (tag detection events, NOT fish)
+A69-9001-45034: 10 detections (tag detection events, NOT fish)
 A69-9001-64219: 4 detections (tag detection events, NOT fish)
-A69-9001-64222: 22 detections (tag detection events, NOT fish)
+A69-9001-64222: 23 detections (tag detection events, NOT fish)
 A69-9001-64280: 14 detections (tag detection events, NOT fish)
-A69-9001-64293: 161 detections (tag detection events, NOT fish)
-A69-9001-64296: 151 detections (tag detection events, NOT fish)
-A69-9001-64298: 246 detections (tag detection events, NOT fish)
+A69-9001-64293: 162 detections (tag detection events, NOT fish)
+A69-9001-64296: 157 detections (tag detection events, NOT fish)
+A69-9001-64298: 249 detections (tag detection events, NOT fish)
 A69-9001-64415: 1 detections (tag detection events, NOT fish)
 A69-9001-64416: 1 detections (tag detection events, NOT fish)
 
@@ -102505,19 +102505,21 @@ https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/]]></description>
 
 Receiver: DES PLAINES RIVER ABOVE BRANDON ROAD LOCK AND DAM AT ROCKDALE, IL
 Status: ONLINE
-Last source update: 2026-09-23 14:00:00 (source tz, see source)
-Last fish detection: 2026-09-23 14:00:00
-Reporting period: previous 24 h ending 2026-09-23 14:00:00
+Last source update: 2026-09-23 15:00:00 (source tz, see source)
+Last fish detection: 2026-09-23 15:00:00
+Reporting period: previous 24 h ending 2026-09-23 15:00:00
 
 FISH DETECTIONS (live TagID level; species attribution via RAFT/subscription)
-Unique tags (24 h): 7 / detection events (24 h): 9
-A69-9001-44993: 2 detections (tag detection events, NOT fish)
-A69-9001-44995: 1 detections (tag detection events, NOT fish)
+Unique tags (24 h): 9 / detection events (24 h): 73
+A69-1601-62879: 2 detections (tag detection events, NOT fish)
+A69-9001-44993: 10 detections (tag detection events, NOT fish)
+A69-9001-44995: 4 detections (tag detection events, NOT fish)
 A69-9001-64228: 1 detections (tag detection events, NOT fish)
-A69-9001-64231: 1 detections (tag detection events, NOT fish)
-A69-9001-64235: 1 detections (tag detection events, NOT fish)
+A69-9001-64231: 10 detections (tag detection events, NOT fish)
+A69-9001-64235: 10 detections (tag detection events, NOT fish)
 A69-9001-64418: 1 detections (tag detection events, NOT fish)
-A69-9001-64420: 1 detections (tag detection events, NOT fish)
+A69-9001-64419: 1 detections (tag detection events, NOT fish)
+A69-9001-64420: 11 detections (tag detection events, NOT fish)
 
 RECEIVER
 Receiver ID: USGS-LIVE-05538010
@@ -102538,14 +102540,14 @@ https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/]]></description>
 
 Receiver: DES PLAINES RIVER BELOW BRANDON ROAD LOCK AND DAM AT ROCKDALE, IL
 Status: ONLINE
-Last source update: 2026-09-23 14:10:00 (source tz, see source)
-Last fish detection: 2026-09-23 13:55:00
-Reporting period: previous 24 h ending 2026-09-23 14:10:00
+Last source update: 2026-09-23 15:10:00 (source tz, see source)
+Last fish detection: 2026-09-23 15:10:00
+Reporting period: previous 24 h ending 2026-09-23 15:10:00
 
 FISH DETECTIONS (live TagID level; species attribution via RAFT/subscription)
-Unique tags (24 h): 2 / detection events (24 h): 151
+Unique tags (24 h): 2 / detection events (24 h): 153
 A69-1601-62623: 139 detections (tag detection events, NOT fish)
-A69-9001-45003: 5 detections (tag detection events, NOT fish)
+A69-9001-45003: 7 detections (tag detection events, NOT fish)
 
 RECEIVER
 Receiver ID: USGS-LIVE-05538020
@@ -102566,18 +102568,18 @@ https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/]]></description>
 
 Receiver: ILLINOIS RIVER ABOVE DRESDEN ISLAND DAM NEAR MINOOKA, IL
 Status: ONLINE
-Last source update: 2026-09-23 14:00:00 (source tz, see source)
-Last fish detection: 2026-09-23 14:00:00
-Reporting period: previous 24 h ending 2026-09-23 14:00:00
+Last source update: 2026-09-23 15:00:00 (source tz, see source)
+Last fish detection: 2026-09-23 15:00:00
+Reporting period: previous 24 h ending 2026-09-23 15:00:00
 
 FISH DETECTIONS (live TagID level; species attribution via RAFT/subscription)
-Unique tags (24 h): 6 / detection events (24 h): 1538
-A69-9001-45020: 263 detections (tag detection events, NOT fish)
+Unique tags (24 h): 6 / detection events (24 h): 1519
+A69-9001-45020: 258 detections (tag detection events, NOT fish)
 A69-9001-45042: 253 detections (tag detection events, NOT fish)
-A69-9001-45079: 73 detections (tag detection events, NOT fish)
-A69-9001-45080: 83 detections (tag detection events, NOT fish)
-A69-9001-64385: 14 detections (tag detection events, NOT fish)
-A69-9001-64434: 186 detections (tag detection events, NOT fish)
+A69-9001-45079: 65 detections (tag detection events, NOT fish)
+A69-9001-45080: 85 detections (tag detection events, NOT fish)
+A69-9001-64385: 15 detections (tag detection events, NOT fish)
+A69-9001-64434: 189 detections (tag detection events, NOT fish)
 
 RECEIVER
 Receiver ID: USGS-LIVE-05541498
@@ -102622,13 +102624,13 @@ https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/]]></description>
 
 Receiver: ELIZA CREEK AT BOSTON BAY (P18) AT NEW BOSTON, IL
 Status: ONLINE
-Last source update: 2026-09-23 13:55:00 (source tz, see source)
-Last fish detection: 2026-09-23 13:55:00
-Reporting period: previous 24 h ending 2026-09-23 13:55:00
+Last source update: 2026-09-23 14:55:00 (source tz, see source)
+Last fish detection: 2026-09-23 14:50:00
+Reporting period: previous 24 h ending 2026-09-23 14:55:00
 
 FISH DETECTIONS (live TagID level; species attribution via RAFT/subscription)
-Unique tags (24 h): 6 / detection events (24 h): 327
-A69-9001-12690: 74 detections (tag detection events, NOT fish)
+Unique tags (24 h): 6 / detection events (24 h): 331
+A69-9001-12690: 78 detections (tag detection events, NOT fish)
 A69-9001-58485: 101 detections (tag detection events, NOT fish)
 A69-9001-58501: 16 detections (tag detection events, NOT fish)
 A69-9001-58617: 2 detections (tag detection events, NOT fish)
@@ -102654,12 +102656,12 @@ https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/]]></description>
 
 Receiver: CLEVELAND SLOUGH (P17) NEAR PORT LOUISA, IA
 Status: ONLINE
-Last source update: 2026-09-23 13:55:00 (source tz, see source)
-Last fish detection: 2026-09-23 13:55:00
-Reporting period: previous 24 h ending 2026-09-23 13:55:00
+Last source update: 2026-09-23 14:55:00 (source tz, see source)
+Last fish detection: 2026-09-23 14:55:00
+Reporting period: previous 24 h ending 2026-09-23 14:55:00
 
 FISH DETECTIONS (live TagID level; species attribution via RAFT/subscription)
-Unique tags (24 h): 3 / detection events (24 h): 1154
+Unique tags (24 h): 3 / detection events (24 h): 1155
 A69-9001-58610: 269 detections (tag detection events, NOT fish)
 A69-9001-58625: 2 detections (tag detection events, NOT fish)
 A69-9001-58635: 278 detections (tag detection events, NOT fish)
@@ -102683,12 +102685,12 @@ https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/]]></description>
 
 Receiver: HANSON GRAVEL WEST PIT AT CULVERT NR MORRIS, IL
 Status: ONLINE
-Last source update: 2026-09-23 14:05:00 (source tz, see source)
-Last fish detection: 2026-09-23 14:05:00
-Reporting period: previous 24 h ending 2026-09-23 14:05:00
+Last source update: 2026-09-23 15:05:00 (source tz, see source)
+Last fish detection: 2026-09-23 15:05:00
+Reporting period: previous 24 h ending 2026-09-23 15:05:00
 
 FISH DETECTIONS (live TagID level; species attribution via RAFT/subscription)
-Unique tags (24 h): 3 / detection events (24 h): 1413
+Unique tags (24 h): 3 / detection events (24 h): 1410
 A69-1601-62867: 129 detections (tag detection events, NOT fish)
 A69-1604-29064: 288 detections (tag detection events, NOT fish)
 A69-1604-29071: 6 detections (tag detection events, NOT fish)
@@ -102712,13 +102714,13 @@ https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/]]></description>
 
 Receiver: DRESDEN GENERATING STATION OUTFALL NR MINOOKA, IL
 Status: ONLINE
-Last source update: 2026-09-23 14:00:00 (source tz, see source)
-Last fish detection: 2026-09-23 13:50:00
-Reporting period: previous 24 h ending 2026-09-23 14:00:00
+Last source update: 2026-09-23 15:00:00 (source tz, see source)
+Last fish detection: 2026-09-23 15:00:00
+Reporting period: previous 24 h ending 2026-09-23 15:00:00
 
 FISH DETECTIONS (live TagID level; species attribution via RAFT/subscription)
-Unique tags (24 h): 2 / detection events (24 h): 141
-A69-1601-62880: 140 detections (tag detection events, NOT fish)
+Unique tags (24 h): 2 / detection events (24 h): 143
+A69-1601-62880: 142 detections (tag detection events, NOT fish)
 A69-9001-64385: 1 detections (tag detection events, NOT fish)
 
 RECEIVER
