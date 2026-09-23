@@ -7,7 +7,7 @@
     "reason": "",
     "receiver_id": "GLATOS-LSR-021",
     "receiver_name": "LSR-021",
-    "source_update_time": "2026-09-23 14:00:00 EST",
+    "source_update_time": "2026-09-23 15:00:00 EST",
     "source_url": "https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/412109083063800.html",
     "source_urls": [
       "https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/",
@@ -19,7 +19,7 @@
       "GLATOS/sturgeon-HEC",
       "USGS/live"
     ],
-    "status_timestamp": "2026-09-23T20:27:21.413470+00:00"
+    "status_timestamp": "2026-09-23T21:26:13.795633+00:00"
   },
   {
     "current_status": "ONLINE",
@@ -29,7 +29,7 @@
     "reason": "",
     "receiver_id": "GLATOS-LSR-002",
     "receiver_name": "LSR-002",
-    "source_update_time": "2026-09-23 13:55:00 EST",
+    "source_update_time": "2026-09-23 14:55:00 EST",
     "source_url": "https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/412618083021701.html",
     "source_urls": [
       "https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/",
@@ -41,7 +41,7 @@
       "GLATOS/sturgeon-HEC",
       "USGS/live"
     ],
-    "status_timestamp": "2026-09-23T20:27:21.413470+00:00"
+    "status_timestamp": "2026-09-23T21:26:13.795633+00:00"
   },
   {
     "current_status": "ONLINE",
@@ -51,7 +51,7 @@
     "reason": "",
     "receiver_id": "USGS-LIVE-05536890",
     "receiver_name": "CHICAGO SANITARY AND SHIP CANAL NR LEMONT, IL",
-    "source_update_time": "2026-09-23 12:55:00 CST",
+    "source_update_time": "2026-09-23 13:55:00 CST",
     "source_url": "https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/05536890.html",
     "source_urls": [
       "https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/"
@@ -59,7 +59,7 @@
     "sources": [
       "USGS/live"
     ],
-    "status_timestamp": "2026-09-23T20:27:21.413470+00:00"
+    "status_timestamp": "2026-09-23T21:26:13.795633+00:00"
   },
   {
     "current_status": "ONLINE",
@@ -69,7 +69,7 @@
     "reason": "",
     "receiver_id": "USGS-LIVE-05536995",
     "receiver_name": "CHICAGO SANITARY AND SHIP CANAL BELOW FISH BARRIER AT ROMEOVILLE, IL",
-    "source_update_time": "2026-09-23 13:00:00 CST",
+    "source_update_time": "2026-09-23 14:00:00 CST",
     "source_url": "https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/05536995.html",
     "source_urls": [
       "https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/"
@@ -77,17 +77,17 @@
     "sources": [
       "USGS/live"
     ],
-    "status_timestamp": "2026-09-23T20:27:21.413470+00:00"
+    "status_timestamp": "2026-09-23T21:26:13.795633+00:00"
   },
   {
-    "current_status": "OFFLINE",
+    "current_status": "ONLINE",
     "latitude": 41.505,
     "longitude": -88.0997222,
     "network": "USGS Real-Time Fish Telemetry",
-    "reason": "Feed stale: last source update 131.5 h ago (threshold 30.0 h)",
+    "reason": "",
     "receiver_id": "USGS-LIVE-05538010",
     "receiver_name": "DES PLAINES RIVER ABOVE BRANDON ROAD LOCK AND DAM AT ROCKDALE, IL",
-    "source_update_time": "2026-09-18 03:00:00 CST",
+    "source_update_time": "2026-09-23 14:00:00 CST",
     "source_url": "https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/05538010.html",
     "source_urls": [
       "https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/"
@@ -95,7 +95,7 @@
     "sources": [
       "USGS/live"
     ],
-    "status_timestamp": "2026-09-23T20:27:21.413470+00:00"
+    "status_timestamp": "2026-09-23T21:26:13.795633+00:00"
   },
   {
     "current_status": "ONLINE",
@@ -105,7 +105,7 @@
     "reason": "",
     "receiver_id": "USGS-LIVE-05538020",
     "receiver_name": "DES PLAINES RIVER BELOW BRANDON ROAD LOCK AND DAM AT ROCKDALE, IL",
-    "source_update_time": "2026-09-23 13:10:00 CST",
+    "source_update_time": "2026-09-23 14:10:00 CST",
     "source_url": "https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/05538020.html",
     "source_urls": [
       "https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/"
@@ -113,7 +113,7 @@
     "sources": [
       "USGS/live"
     ],
-    "status_timestamp": "2026-09-23T20:27:21.413470+00:00"
+    "status_timestamp": "2026-09-23T21:26:13.795633+00:00"
   },
   {
     "current_status": "ONLINE",
@@ -123,7 +123,7 @@
     "reason": "",
     "receiver_id": "USGS-LIVE-412341088161001",
     "receiver_name": "DRESDEN GENERATING STATION OUTFALL NR MINOOKA, IL",
-    "source_update_time": "2026-09-23 13:00:00 CST",
+    "source_update_time": "2026-09-23 14:00:00 CST",
     "source_url": "https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/412341088161001.html",
     "source_urls": [
       "https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/"
@@ -131,7 +131,7 @@
     "sources": [
       "USGS/live"
     ],
-    "status_timestamp": "2026-09-23T20:27:21.413470+00:00"
+    "status_timestamp": "2026-09-23T21:26:13.795633+00:00"
   },
   {
     "current_status": "ONLINE",
@@ -141,7 +141,7 @@
     "reason": "",
     "receiver_id": "USGS-LIVE-05541498",
     "receiver_name": "ILLINOIS RIVER ABOVE DRESDEN ISLAND DAM NEAR MINOOKA, IL",
-    "source_update_time": "2026-09-23 13:00:00 CST",
+    "source_update_time": "2026-09-23 14:00:00 CST",
     "source_url": "https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/05541498.html",
     "source_urls": [
       "https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/"
@@ -149,7 +149,7 @@
     "sources": [
       "USGS/live"
     ],
-    "status_timestamp": "2026-09-23T20:27:21.413470+00:00"
+    "status_timestamp": "2026-09-23T21:26:13.795633+00:00"
   },
   {
     "current_status": "ONLINE",
@@ -159,7 +159,7 @@
     "reason": "",
     "receiver_id": "USGS-LIVE-411955088280601",
     "receiver_name": "HANSON GRAVEL WEST PIT AT CULVERT NR MORRIS, IL",
-    "source_update_time": "2026-09-23 13:05:00 CST",
+    "source_update_time": "2026-09-23 14:05:00 CST",
     "source_url": "https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/411955088280601.html",
     "source_urls": [
       "https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/"
@@ -167,7 +167,7 @@
     "sources": [
       "USGS/live"
     ],
-    "status_timestamp": "2026-09-23T20:27:21.413470+00:00"
+    "status_timestamp": "2026-09-23T21:26:13.795633+00:00"
   },
   {
     "current_status": "ONLINE",
@@ -177,7 +177,7 @@
     "reason": "",
     "receiver_id": "USGS-LIVE-411333091051000",
     "receiver_name": "CLEVELAND SLOUGH (P17) NEAR PORT LOUISA, IA",
-    "source_update_time": "2026-09-23 12:55:00 CST",
+    "source_update_time": "2026-09-23 13:55:00 CST",
     "source_url": "https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/411333091051000.html",
     "source_urls": [
       "https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/"
@@ -185,7 +185,7 @@
     "sources": [
       "USGS/live"
     ],
-    "status_timestamp": "2026-09-23T20:27:21.413470+00:00"
+    "status_timestamp": "2026-09-23T21:26:13.795633+00:00"
   },
   {
     "current_status": "ONLINE",
@@ -195,7 +195,7 @@
     "reason": "",
     "receiver_id": "USGS-LIVE-411133091003401",
     "receiver_name": "ELIZA CREEK AT BOSTON BAY (P18) AT NEW BOSTON, IL",
-    "source_update_time": "2026-09-23 12:55:00 CST",
+    "source_update_time": "2026-09-23 13:55:00 CST",
     "source_url": "https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/411133091003401.html",
     "source_urls": [
       "https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/"
@@ -203,7 +203,7 @@
     "sources": [
       "USGS/live"
     ],
-    "status_timestamp": "2026-09-23T20:27:21.413470+00:00"
+    "status_timestamp": "2026-09-23T21:26:13.795633+00:00"
   },
   {
     "current_status": "OFFLINE",
@@ -221,7 +221,7 @@
     "sources": [
       "USGS/live"
     ],
-    "status_timestamp": "2026-09-23T20:27:21.413470+00:00"
+    "status_timestamp": "2026-09-23T21:26:13.795633+00:00"
   },
   {
     "current_status": "OFFLINE",
@@ -239,6 +239,6 @@
     "sources": [
       "USGS/live"
     ],
-    "status_timestamp": "2026-09-23T20:27:21.413470+00:00"
+    "status_timestamp": "2026-09-23T21:26:13.795633+00:00"
   }
 ]
