@@ -17,14 +17,14 @@
 
 Receiver: LSR-021
 Status: ONLINE
-Last source update: 2026-09-23 12:00:00 (source tz, see source)
-Last fish detection: 2026-09-23 11:40:00
-Reporting period: previous 24 h ending 2026-09-23 12:00:00
+Last source update: 2026-09-23 13:00:00 (source tz, see source)
+Last fish detection: 2026-09-23 13:00:00
+Reporting period: previous 24 h ending 2026-09-23 13:00:00
 
 FISH DETECTIONS (live TagID level; species attribution via RAFT/subscription)
-Unique tags (24 h): 2 / detection events (24 h): 65
-A69-1601-62016: 47 detections (tag detection events, NOT fish)
-A69-1601-62032: 18 detections (tag detection events, NOT fish)
+Unique tags (24 h): 2 / detection events (24 h): 71
+A69-1601-62016: 52 detections (tag detection events, NOT fish)
+A69-1601-62032: 19 detections (tag detection events, NOT fish)
 
 RECEIVER
 Receiver ID: GLATOS-LSR-021
