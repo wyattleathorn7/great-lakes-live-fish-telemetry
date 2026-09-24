@@ -50895,8 +50895,8 @@ https://glatos.org/map]]></description>
 
 Receiver: LSR-002
 Status: ONLINE
-Last source update: 2026-09-23 19:55:00
-Last fish detection: 2026-09-23 19:55:00
+Last source update: 2026-09-23 20:55:00
+Last fish detection: 2026-09-23 20:55:00
 Reporting period: Previous 24 h
 
 FISH SPECIES DETECTIONS
@@ -50906,7 +50906,7 @@ Common Carp: 0
 Common Carp/Goldfish: 0
 Silver Carp: 0
 Silver Carp/Bighead Carp: 0
-Unresolved tag detections: 250 detection events (species pending resolution)
+Unresolved tag detections: 249 detection events (species pending resolution)
 Counts are tag detection events, not fish abundance.
 
 Receiver ID: GLATOS-LSR-002
@@ -51383,8 +51383,8 @@ https://glatos.org/map]]></description>
 
 Receiver: LSR-021
 Status: ONLINE
-Last source update: 2026-09-23 20:00:00
-Last fish detection: 2026-09-23 19:55:00
+Last source update: 2026-09-23 21:00:00
+Last fish detection: 2026-09-23 20:55:00
 Reporting period: Previous 24 h
 
 FISH SPECIES DETECTIONS
@@ -51394,7 +51394,7 @@ Common Carp: 0
 Common Carp/Goldfish: 0
 Silver Carp: 0
 Silver Carp/Bighead Carp: 0
-Unresolved tag detections: 78 detection events (species pending resolution)
+Unresolved tag detections: 82 detection events (species pending resolution)
 Counts are tag detection events, not fish abundance.
 
 Receiver ID: GLATOS-LSR-021
@@ -116807,15 +116807,15 @@ https://glatos.org/map]]></description>
 
 Receiver: BRP-1
 Status: ONLINE
-Last source update: 2026-09-23 19:00:00
-Last fish detection: 2026-09-23 19:00:00
+Last source update: 2026-09-23 20:00:00
+Last fish detection: 2026-09-23 20:00:00
 Reporting period: Previous 24 h
 
 FISH SPECIES DETECTIONS
 Species detections — previous 24 h
 Bighead Carp: 0
-Common Carp: 399
-Common Carp/Goldfish: 56
+Common Carp: 500
+Common Carp/Goldfish: 66
 Silver Carp: 0
 Silver Carp/Bighead Carp: 0
 Unresolved tag detections: 7 detection events (species pending resolution)
@@ -116927,14 +116927,14 @@ https://glatos.org/map]]></description>
 
 Receiver: DIP-3
 Status: ONLINE
-Last source update: 2026-09-23 19:10:00
-Last fish detection: 2026-09-23 19:05:00
+Last source update: 2026-09-23 20:10:00
+Last fish detection: 2026-09-23 20:05:00
 Reporting period: Previous 24 h
 
 FISH SPECIES DETECTIONS
 Species detections — previous 24 h
 Bighead Carp: 0
-Common Carp: 51
+Common Carp: 53
 Common Carp/Goldfish: 0
 Silver Carp: 0
 Silver Carp/Bighead Carp: 0
@@ -117069,18 +117069,18 @@ https://glatos.org/map]]></description>
 
 Receiver: LLP-6
 Status: ONLINE
-Last source update: 2026-09-23 19:00:00
-Last fish detection: 2026-09-23 19:00:00
+Last source update: 2026-09-23 20:00:00
+Last fish detection: 2026-09-23 20:00:00
 Reporting period: Previous 24 h
 
 FISH SPECIES DETECTIONS
 Species detections — previous 24 h
 Bighead Carp: 0
-Common Carp: 1286
-Common Carp/Goldfish: 18
+Common Carp: 1304
+Common Carp/Goldfish: 16
 Silver Carp: 0
 Silver Carp/Bighead Carp: 0
-Unresolved tag detections: 207 detection events (species pending resolution)
+Unresolved tag detections: 206 detection events (species pending resolution)
 Counts are tag detection events, not fish abundance.
 
 Receiver ID: GLATOSMAP-CRSAC-LLP-6
@@ -216259,8 +216259,8 @@ https://erddap.oceantrack.org/erddap/tabledap/view_otn_aat_receivers]]></descrip
 
 Receiver: CHICAGO SANITARY AND SHIP CANAL NR LEMONT, IL
 Status: ONLINE
-Last source update: 2026-09-23 18:55:00
-Last fish detection: 2026-09-23 18:50:00
+Last source update: 2026-09-23 19:55:00
+Last fish detection: 2026-09-23 19:50:00
 Reporting period: Previous 24 h
 
 FISH SPECIES DETECTIONS
@@ -216289,16 +216289,16 @@ https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/]]></description>
 
 Receiver: ILLINOIS RIVER ABOVE DRESDEN ISLAND DAM NEAR MINOOKA, IL
 Status: ONLINE
-Last source update: 2026-09-23 19:00:00
-Last fish detection: 2026-09-23 19:00:00
+Last source update: 2026-09-23 20:00:00
+Last fish detection: 2026-09-23 20:00:00
 Reporting period: Previous 24 h
 
 FISH SPECIES DETECTIONS
 Species detections — previous 24 h
-Bighead Carp: 273
+Bighead Carp: 274
 Common Carp: 0
 Common Carp/Goldfish: 0
-Silver Carp: 1250
+Silver Carp: 1242
 Silver Carp/Bighead Carp: 0
 Counts are tag detection events, not fish abundance.
 
@@ -216339,7 +216339,7 @@ https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/]]></description>
 
 Receiver: ELIZA CREEK AT BOSTON BAY (P18) AT NEW BOSTON, IL
 Status: ONLINE
-Last source update: 2026-09-23 18:55:00
+Last source update: 2026-09-23 19:55:00
 Last fish detection: 2026-09-23 18:45:00
 Reporting period: Previous 24 h
 
@@ -216348,8 +216348,8 @@ Species detections — previous 24 h
 Bighead Carp: 26
 Common Carp: 0
 Common Carp/Goldfish: 0
-Silver Carp: 186
-Silver Carp/Bighead Carp: 95
+Silver Carp: 160
+Silver Carp/Bighead Carp: 91
 Counts are tag detection events, not fish abundance.
 
 Receiver ID: USGS-LIVE-411133091003401
@@ -216368,8 +216368,8 @@ https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/]]></description>
 
 Receiver: CLEVELAND SLOUGH (P17) NEAR PORT LOUISA, IA
 Status: ONLINE
-Last source update: 2026-09-23 18:55:00
-Last fish detection: 2026-09-23 18:55:00
+Last source update: 2026-09-23 19:55:00
+Last fish detection: 2026-09-23 19:55:00
 Reporting period: Previous 24 h
 
 FISH SPECIES DETECTIONS
@@ -216377,7 +216377,7 @@ Species detections — previous 24 h
 Bighead Carp: 3
 Common Carp: 0
 Common Carp/Goldfish: 0
-Silver Carp: 1178
+Silver Carp: 1185
 Silver Carp/Bighead Carp: 0
 Counts are tag detection events, not fish abundance.
 
@@ -216397,8 +216397,8 @@ https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/]]></description>
 
 Receiver: HANSON GRAVEL WEST PIT AT CULVERT NR MORRIS, IL
 Status: ONLINE
-Last source update: 2026-09-23 19:05:00
-Last fish detection: 2026-09-23 19:05:00
+Last source update: 2026-09-23 20:05:00
+Last fish detection: 2026-09-23 20:05:00
 Reporting period: Previous 24 h
 
 FISH SPECIES DETECTIONS
@@ -216406,7 +216406,7 @@ Species detections — previous 24 h
 Bighead Carp: 0
 Common Carp: 0
 Common Carp/Goldfish: 0
-Silver Carp: 1437
+Silver Carp: 1436
 Silver Carp/Bighead Carp: 0
 Unresolved tag detections: 365 detection events (species pending resolution)
 Counts are tag detection events, not fish abundance.
@@ -216427,8 +216427,8 @@ https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/]]></description>
 
 Receiver: DRESDEN GENERATING STATION OUTFALL NR MINOOKA, IL
 Status: ONLINE
-Last source update: 2026-09-23 19:00:00
-Last fish detection: 2026-09-23 19:00:00
+Last source update: 2026-09-23 20:00:00
+Last fish detection: 2026-09-23 19:55:00
 Reporting period: Previous 24 h
 
 FISH SPECIES DETECTIONS
@@ -216436,9 +216436,9 @@ Species detections — previous 24 h
 Bighead Carp: 0
 Common Carp: 0
 Common Carp/Goldfish: 0
-Silver Carp: 4
+Silver Carp: 2
 Silver Carp/Bighead Carp: 0
-Unresolved tag detections: 143 detection events (species pending resolution)
+Unresolved tag detections: 142 detection events (species pending resolution)
 Counts are tag detection events, not fish abundance.
 
 Receiver ID: USGS-LIVE-412341088161001
