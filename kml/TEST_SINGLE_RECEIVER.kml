@@ -17,29 +17,53 @@
 
 Receiver: LSR-021
 Status: ONLINE
-Last source update: 2026-09-24 05:00:00
-Last fish detection: 2026-09-24 04:45:00
+Last source update: 2026-09-24 07:00:00
+Last fish detection: 2026-09-24 07:00:00
 Reporting period: Previous 24 h
 
 FISH SPECIES DETECTIONS
-Species detections — previous 24 h
+Alewife: 0
+American Eel: 0
+Atlantic Salmon: 0
 Bighead Carp: 0
+Brook Trout: 0
+Brown Trout: 0
+Channel Catfish: 0
+Cisco: 0
 Common Carp: 0
-Common Carp/Goldfish: 0
+Freshwater Drum: 0
+Grass Carp: 0
+Lake Sturgeon: 0
+Lake Trout: 0
+Lake Whitefish: 0
+Muskellunge: 0
+Northern Pike: 0
+Round Whitefish: 0
+Sea Lamprey: 0
+Shorthead Redhorse: 0
 Silver Carp: 0
-Silver Carp/Bighead Carp: 0
-Unresolved tag detections: 104 detection events (species pending resolution)
+Silver Redhorse: 0
+Smallmouth Bass: 0
+Smallmouth Buffalo: 0
+Steelhead: 0
+Walleye: 0
+White Bass: 0
+White Sucker: 0
+Yellow Perch: 0
 Counts are tag detection events, not fish abundance.
 
+Data-quality note: 108 detection events from transmitters pending species identification are excluded above; see live_detections.json.
+
 Receiver ID: GLATOS-LSR-021
+Network: USGS Real-Time Fish Telemetry + GLATOS/OTN deployments
 Array: LSR
 Coordinates: 41.352640, -83.111290
 
 Source:
-https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/
-https://doi.org/10.5066/P13H22V6
-https://doi.org/10.5066/P142JQOJ
-https://glatos.org/map]]></description>
+<a href="https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/">USGS real-time fish telemetry</a>
+<a href="https://doi.org/10.5066/P13H22V6">USGS data release 10.5066/P13H22V6</a>
+<a href="https://doi.org/10.5066/P142JQOJ">USGS data release 10.5066/P142JQOJ</a>
+<a href="https://glatos.org/map">GLATOS public receiver map</a>]]></description>
       <Point>
         <coordinates>-83.111290,41.352640,0</coordinates>
       </Point>
