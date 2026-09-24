@@ -47,6 +47,22 @@ try:
 except ImportError:  # allow audit.py import without species side effects
     resolve_species, UNRESOLVED = None, "UNRESOLVED_TAG"
 
+
+def build_registry_order():
+    """Canonical tracked-species order from source/species_registry.json."""
+    reg_path = os.path.join(SOURCE, "species_registry.json")
+    if not os.path.exists(reg_path):
+        try:
+            sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+            from species_registry import build as build_reg
+            return build_reg()["order"]
+        except Exception:
+            return []
+    try:
+        return json.load(open(reg_path))["order"]
+    except (ValueError, KeyError):
+        return []
+
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(BASE, "data")
 SOURCE = os.path.join(BASE, "source")
@@ -655,7 +671,7 @@ def esc(s):
 
 
 def description(rec, status, ctx):
-    """User-facing placemark description: species + counts, concise receiver info."""
+    """User-facing placemark description, rebuilt from scratch per spec."""
     L = ["\U0001F41F LIVE ACOUSTIC TELEMETRY RECEIVER", "",
          f"Receiver: {rec['name']}", f"Status: {status}"]
     d = ctx or {}
@@ -665,14 +681,16 @@ def description(rec, status, ctx):
         L.append(f"Last fish detection: {d['last_detection']}")
     if status == "ONLINE":
         L += ["Reporting period: Previous 24 h", "",
-              "FISH SPECIES DETECTIONS", "Species detections \u2014 previous 24 h"]
+              "FISH SPECIES DETECTIONS"]
         for sp in d.get("species_order", []):
             L.append(f"{sp}: {d['species_counts'].get(sp, 0)}")
-        if d.get("unresolved_events"):
-            L.append(f"Unresolved tag detections: {d['unresolved_events']} "
-                      "detection events (species pending resolution)")
         L.append("Counts are tag detection events, not fish abundance.")
-    elif status == "OFFLINE":
+        if d.get("unresolved_events"):
+            L += ["", (f"Data-quality note: {d['unresolved_events']} detection events "
+                       "from transmitters pending species identification are excluded "
+                       "above; see live_detections.json.")]
+    elif status in ("OFFLINE", "SEASONAL \u2014 CURRENTLY OUT OF SEASON",
+                    "DISMANTLED / REMOVED"):
         L += ["", "Current live detections: UNAVAILABLE"]
         if d.get("reason"):
             L.append(f"Reason: {d['reason']}")
@@ -688,13 +706,29 @@ def description(rec, status, ctx):
         if rec.get("projects"):
             L.append(f"Projects: {', '.join(sorted(rec['projects'])[:4])}")
     L += ["", f"Receiver ID: {rec['rid']}"]
+    if rec.get("network"):
+        L.append(f"Network: {rec['network']}")
     if rec.get("arrays"):
         L.append(f"Array: {', '.join(sorted(rec['arrays'])[:3])}")
     L.append(f"Coordinates: {rec['lat']:.6f}, {rec['lon']:.6f}")
     L += ["", "Source:"]
     for u in sorted(rec["source_urls"])[:4]:
-        L.append(u)
+        L.append(f'<a href="{u}">{link_label(u)}</a>')
     return "\n".join(L)
+
+
+def link_label(url):
+    if "Fish_Tracks_Real_Time" in url:
+        return "USGS real-time fish telemetry"
+    if url.startswith("https://doi.org/"):
+        return "USGS data release " + url.split("doi.org/")[1]
+    if "glatos.org/map" in url:
+        return "GLATOS public receiver map"
+    if "erddap.oceantrack.org" in url:
+        return "OTN ERDDAP receivers"
+    if "usgs.gov" in url:
+        return "USGS science page"
+    return url.split("/")[2] if "://" in url else url
 
 
 def build_kml(receivers, statuses):
@@ -716,8 +750,12 @@ def build_kml(receivers, statuses):
         ET.SubElement(pt, "coordinates").text = f"{rec['lon']:.6f},{rec['lat']:.6f},0"
     ET.indent(root)
     kml = ET.tostring(root, encoding="unicode", xml_declaration=True)
-    # ET escapes CDATA markers; restore real CDATA sections for Google Earth HTML.
-    return kml.replace("&lt;![CDATA[", "<![CDATA[").replace("]]&gt;", "]]>")
+    # ET escapes CDATA markers and inner HTML; restore real CDATA sections with
+    # working hyperlinks (same raw-HTML-in-CDATA pattern as the buoy KML).
+    kml = kml.replace("&lt;![CDATA[", "<![CDATA[").replace("]]&gt;", "]]>")
+    kml = re.sub(r'&lt;(a href=".*?")&gt;(.*?)&lt;(/a)&gt;',
+                 lambda m: f"<{m.group(1)}>{m.group(2)}<{m.group(3)}>", kml)
+    return kml
 
 
 # ---------------- main ----------------
@@ -767,43 +805,48 @@ def main():
     receivers, stats = build_inventory(live_stations)
 
     failures = []
-    # ---- lifecycle classification ----
+    # ---- lifecycle classification (evidence-based taxonomy) ----
+    # ONLINE / OFFLINE (live-linked w/ reason) / DISMANTLED / REMOVED /
+    # ONGOING — NO LIVE FEED / SEASONAL — CURRENTLY OUT OF SEASON /
+    # HISTORICAL — NOT CURRENTLY DEPLOYED / UNKNOWN
     statuses = {}
     for rid, rec in receivers.items():
         st = rec.get("live")
         if st is not None:
             status, reason = classify_live(st, now_utc)
+            if status == "OFFLINE" and "season" in reason.lower():
+                status = "SEASONAL \u2014 CURRENTLY OUT OF SEASON"
             statuses[rid] = status
             rec["status_reason"] = reason
             continue
         mi = rec.get("map_info") or []
         mstats = {m["status"] for m in mi}
         if "Ongoing" in mstats:
-            statuses[rid] = "ONLINE / DATA NOT PUBLIC"
+            statuses[rid] = "ONGOING \u2014 NO LIVE FEED"
             rec["status_reason"] = ("GLATOS map status Ongoing: receiver deployed, "
                                     "detection stream not publicly exposed")
         elif mstats == {"Proposed"}:
-            statuses[rid] = "UNCERTAIN"
+            statuses[rid] = "UNKNOWN"
             rec["status_reason"] = "GLATOS map status Proposed (planned, not yet deployed)"
         elif any(s.startswith("Unknown") for s in mstats):
-            statuses[rid] = "UNCERTAIN"
+            statuses[rid] = "UNKNOWN"
             rec["status_reason"] = "GLATOS map: deployed >2 years without a recovery"
         elif "Finished" in mstats:
-            seasonal = any(m.get("seasonal") for m in mi)
-            statuses[rid] = "OFFLINE \u2014 SEASONAL" if seasonal else "FINISHED / HISTORICAL"
-            rec["status_reason"] = ("GLATOS map status Finished"
-                                    + (" (seasonal deployment)" if seasonal else ""))
+            if any(m.get("seasonal") for m in mi):
+                statuses[rid] = "SEASONAL \u2014 CURRENTLY OUT OF SEASON"
+                rec["status_reason"] = "GLATOS map status Finished (seasonal deployment)"
+            else:
+                statuses[rid] = "HISTORICAL \u2014 NOT CURRENTLY DEPLOYED"
+                rec["status_reason"] = "GLATOS map status Finished"
         else:
             recovs = sorted(rec["recovers"])
             if recovs and recovs[-1] < "2024":
-                statuses[rid] = "FINISHED / HISTORICAL"
+                statuses[rid] = "HISTORICAL \u2014 NOT CURRENTLY DEPLOYED"
                 rec["status_reason"] = (f"last documented recovery {recovs[-1]}; "
                                         "no current-status evidence")
             else:
-                statuses[rid] = "UNCERTAIN"
+                statuses[rid] = "UNKNOWN"
                 rec["status_reason"] = "insufficient current-status evidence"
-        if statuses[rid] in ("ONLINE / DATA NOT PUBLIC",):
-            pass
 
     # ---- live detail + 7-day detection history + species resolution ----
     hist7_path = os.path.join(DATA, "detection_history.json")
@@ -828,14 +871,10 @@ def main():
                  "source_urls": sorted(rec["source_urls"])}
         live_receivers.append(entry)
         if statuses[rid] != "ONLINE":
-            lk = lastknown.get(rid)
-            lines = []
-            if lk:
-                lines = ([f"Reporting period: {lk['period']}"] +
-                         [f"{sp}: {lk['counts'].get(sp, 0)}" for sp in lk["order"]])
+            rec["_lk"] = lastknown.get(rid)
             rec["desc_ctx"] = {"reason": rec.get("status_reason", ""),
                                "last_update": st["stamp_text"],
-                               "last_known": lines or None}
+                               "last_known": None}  # filled after registry order known
             continue
         try:
             page = fetch(LIVE_SUMMARY + st["href"])
@@ -911,7 +950,14 @@ def main():
                                 "species_counts_24h": counts,
                                 "unresolved_events_24h": unres,
                                 "last_detection": last_det})
-    system_order = sorted(system_species_7d)
+    system_order = build_registry_order()
+    for rid, rec in receivers.items():
+        lk = rec.pop("_lk", None)
+        if lk and rec.get("live") is not None and statuses[rid] != "ONLINE":
+            rec["desc_ctx"]["last_known"] = (
+                [f"Reporting period: {lk['period']}"] +
+                [f"{sp}: {lk['counts'].get(sp, 0)}" for sp in system_order
+                 if sp in lk["counts"]] or None)
     for rid, v in per_rec.items():
         rec = receivers[rid]
         rec["desc_ctx"] = {
@@ -957,6 +1003,44 @@ def main():
     dump("receiver_status_history.json", hist)
     dump("detection_history.json", hist7)
     dump("last_known_species.json", lastknown)
+    # full receiver audit table (§2 fields for every placemark)
+    audit_rows = []
+    det_by_rid = {d["receiver_id"]: d for d in live_detections}
+    for rid, rec in receivers.items():
+        lv = rec.get("live") or {}
+        mi = rec.get("map_info") or []
+        h = hist.get(rid, [])
+        det = det_by_rid.get(rid, {})
+        dep = sorted(rec["deploys"])
+        recov = sorted(rec["recovers"])
+        audit_rows.append({
+            "receiver_id": rid, "latitude": rec["lat"], "longitude": rec["lon"],
+            "current_status": statuses[rid],
+            "previous_status": h[-2]["status"] if len(h) > 1 else None,
+            "network": rec.get("network", ""),
+            "source_record_id": lv.get("sid") or ";".join(
+                f"{m['project']}/{m['status']}" for m in mi[:4]),
+            "projects": sorted(rec["projects"]), "arrays": sorted(rec["arrays"]),
+            "models": sorted(rec["models"]),
+            "deployment_start": dep[0] if dep else None,
+            "deployment_end": recov[-1] if recov else None,
+            "seasonal": bool(any(m.get("seasonal") for m in mi)),
+            "last_known_detection": det.get("last_detection"),
+            "last_source_update": lv.get("stamp_text"),
+            "source_is_live": lv != {},
+            "source_is_historical": bool(recov),
+            "source_is_seasonal": bool(any(m.get("seasonal") for m in mi)),
+            "source_currently_reports": statuses[rid] == "ONLINE",
+            "currently_ongoing": statuses[rid] in (
+                "ONLINE", "ONGOING \u2014 NO LIVE FEED"),
+            "offline_reason": rec.get("status_reason", ""),
+            "evidence_urls": sorted(rec["source_urls"]),
+            "species_metadata_available": bool(det.get("species_counts_24h")),
+            "species_resolved_detections_24h": sum(
+                (det.get("species_counts_24h") or {}).values()),
+            "unresolved_detections_24h": det.get("unresolved_events_24h", 0),
+        })
+    dump("receiver_audit.json", audit_rows)
     if failures:
         with open(os.path.join(SOURCE, "fetch_failures.log"), "a") as f:
             for line in failures:

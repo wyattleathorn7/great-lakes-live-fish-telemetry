@@ -10,10 +10,11 @@ single-receiver proof: `kml/TEST_SINGLE_RECEIVER.kmz`. `kml/ICON_TEST.kmz`
 verifies the icon alone.
 
 Current inventory: **9,215 placemarks** — 11 ONLINE with live species counts,
-3,157 ONLINE / DATA NOT PUBLIC (deployed per GLATOS map, no public feed),
-3,118 OFFLINE — SEASONAL, 2,446 FINISHED / HISTORICAL, 481 UNCERTAIN,
-2 OFFLINE (live-linked). See `audit/COVERAGE_GAP_REPORT.md` for the
-source-backed accounting.
+3,157 ONGOING — NO LIVE FEED (deployed per GLATOS map, no public feed),
+3,120 SEASONAL — CURRENTLY OUT OF SEASON, 2,446 HISTORICAL — NOT CURRENTLY
+DEPLOYED, 481 UNKNOWN. Every placemark carries an evidence-based reason
+(`data/receiver_audit.json` holds the full per-receiver audit table).
+See `audit/COVERAGE_GAP_REPORT.md` for the source-backed accounting.
 
 ## Receiver lifecycle
 
@@ -63,9 +64,11 @@ geocoded or invented.
 
 Live feeds publish TagIDs. `scripts/species.py` resolves each tag —
 RAFT transmitter lookup → OTN animal releases → USGS tag-metadata files —
-into `data/tag_species_cache.json`, retried hourly. Unresolvable tags stay
-`UNRESOLVED_TAG` (counted, never invented). Descriptions list the live-system
-species one per line with zeros (currently Silver/Bighead/Common Carp),
+into `data/tag_species_cache.json`, retried hourly. The canonical
+28-species registry (`source/species_registry.json`, built by
+`scripts/species_registry.py` from tag evidence + cited GLATOS project
+metadata) appears one-per-line in every ONLINE description with zeros.
+Unresolvable tags are counted only in a data-quality note, never invented.
 24 h reporting window, 7-day detection history (`data/detection_history.json`)
 with aging to 0. Counts are detection events, never fish. ONLINE + zero stays
 ONLINE. No raw TagIDs in descriptions.
