@@ -6,7 +6,7 @@
       <IconStyle>
         <scale>1.0</scale>
         <Icon>
-          <href>../icons/fish_receiver.png</href>
+          <href>icons/fish_receiver.png</href>
         </Icon>
       </IconStyle>
     </Style>
@@ -17,26 +17,29 @@
 
 Receiver: LSR-021
 Status: ONLINE
-Last source update: 2026-09-23 19:00:00 (source tz, see source)
-Last fish detection: 2026-09-23 18:55:00
-Reporting period: previous 24 h ending 2026-09-23 19:00:00
+Last source update: 2026-09-23 20:00:00
+Last fish detection: 2026-09-23 19:55:00
+Reporting period: Previous 24 h
 
-FISH DETECTIONS (live TagID level; species attribution via RAFT/subscription)
-Unique tags (24 h): 2 / detection events (24 h): 79
-A69-1601-62016: 59 detections (tag detection events, NOT fish)
-A69-1601-62032: 20 detections (tag detection events, NOT fish)
+FISH SPECIES DETECTIONS
+Species detections — previous 24 h
+Bighead Carp: 0
+Common Carp: 0
+Common Carp/Goldfish: 0
+Silver Carp: 0
+Silver Carp/Bighead Carp: 0
+Unresolved tag detections: 78 detection events (species pending resolution)
+Counts are tag detection events, not fish abundance.
 
-RECEIVER
 Receiver ID: GLATOS-LSR-021
-Network: USGS Real-Time Fish Telemetry + GLATOS/OTN deployments
-Array: LSR, SBI
-Waterbody: Great Lakes basin / connected waters
-Coordinates: 41.352640, -83.111290 (USGS data release Receiver_locs.csv (DOI 10.5066/P13H22V6))
+Array: LSR
+Coordinates: 41.352640, -83.111290
 
-SOURCE
+Source:
 https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/
 https://doi.org/10.5066/P13H22V6
-https://doi.org/10.5066/P142JQOJ]]></description>
+https://doi.org/10.5066/P142JQOJ
+https://glatos.org/map]]></description>
       <Point>
         <coordinates>-83.111290,41.352640,0</coordinates>
       </Point>
