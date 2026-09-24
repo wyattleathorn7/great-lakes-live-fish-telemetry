@@ -4,10 +4,10 @@ Known public acoustic-telemetry receiver network across the Great Lakes, with
 **persistent placemarks** whose **status + live information change automatically**
 as the authoritative sources change. Receiver existence ≠ receiver status.
 
-Open `kml/LIVE_GREAT_LAKES_FISH_ACOUSTIC_TELEMETRY_RECEIVERS.kmz` in Google
-Earth (KMZ packages the icon, so it renders offline). Start with the
-single-receiver proof: `kml/TEST_SINGLE_RECEIVER.kmz`. `kml/ICON_TEST.kmz`
-verifies the icon alone.
+Open `kml/LIVE_GREAT_LAKES_FISH_ACOUSTIC_TELEMETRY_RECEIVERS.kml` in Google
+Earth. Start with the single-receiver proof: `kml/TEST_SINGLE_RECEIVER.kml`.
+`kml/ICON_TEST.kml` verifies the icon alone. The KML references the published
+icon asset at its absolute repository URL, so no KMZ packaging is needed.
 
 Current inventory: **9,215 placemarks** — 11 ONLINE with live species counts,
 3,157 ONGOING — NO LIVE FEED (deployed per GLATOS map, no public feed),
@@ -81,26 +81,27 @@ coordinates for GLATOS/OTN records. Method per placemark in `coord_method`.
 
 ## Icon
 
-`icons/fish_receiver.png` — 64×64 RGBA, 8-bit truecolor+alpha, genuinely
-transparent, minimal chunks (IHDR/IDAT/IEND only, no ICC), verified
-programmatically. KML references `icons/fish_receiver.png`, which resolves
-both next to a standalone KML and packaged inside the KMZs (`doc.kml` +
-`icons/fish_receiver.png`), fixing the unsupported-format/relative-path
-failure. No buoy icon asset exists anywhere (buoy KMZs use default pushpins),
+`icons/fish_receiver.png` — the user-supplied artwork processed to 64×64 RGBA,
+8-bit truecolor+alpha, genuinely transparent, minimal chunks (IHDR/IDAT/IEND
+only, no ICC), verified programmatically. The production KML references the
+published asset at its absolute repository URL
+(`https://raw.githubusercontent.com/wyattleathorn7/great-lakes-live-fish-telemetry/main/icons/fish_receiver.png`),
+so Google Earth resolves it with no KMZ packaging and no relative paths.
+No buoy icon asset exists anywhere (buoy KMZs use default pushpins),
 so there were no buoy dimensions to match — documented in
-`custom icons/README.md`; drop the real `fish copy3.png` there to adopt it.
+`custom icons/README.md`.
 
 ## Automation
 
 `.github/workflows/update.yml` runs hourly: fetch → source-version check
 (content-aware publish: identical bytes are never republished) → classify →
 resolve new TagIDs → update 24 h counts / 7-day history / timestamps →
-publish KML+KMZ. `OFFLINE → ONLINE` recovery is automatic by stable ID.
+publish KML. `OFFLINE → ONLINE` recovery is automatic by stable ID.
 
 ## Layout
 
 ```
-├── icons/fish_receiver.png   kml/*.kml + *.kmz (KMZ = doc.kml + packaged icon)
+├── icons/fish_receiver.png   kml/*.kml only — zero .kmz files
 │   data/{live_receivers,live_detections,detection_history,last_known_species,
 │   tag_species_cache,receiver_status_history,source_state}.json
 │   source/{provenance.json,fetch_failures.log,cache/}

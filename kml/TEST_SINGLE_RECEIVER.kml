@@ -6,7 +6,7 @@
       <IconStyle>
         <scale>1.0</scale>
         <Icon>
-          <href>icons/fish_receiver.png</href>
+          <href>https://raw.githubusercontent.com/wyattleathorn7/great-lakes-live-fish-telemetry/main/icons/fish_receiver.png</href>
         </Icon>
       </IconStyle>
     </Style>

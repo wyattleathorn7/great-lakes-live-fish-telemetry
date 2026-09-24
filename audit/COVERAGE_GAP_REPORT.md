@@ -118,6 +118,6 @@ as UNRESOLVED_TAG, counted only in the data-quality note, retried hourly.
    A69-1601-62xxx) remain UNRESOLVED_TAG across all four metadata sources —
    counted without IDs, retried hourly, never invented.
 5. Valid RGBA icon (IHDR/IDAT/IEND only) + KMZ packaging (`icons/` inside KMZ),
-   minimal icon test first (`ICON_TEST.kmz`).
+   minimal icon test first (`ICON_TEST.kml`).
 6. Re-validated test receiver + full inventory (9,215 placemarks, 0 TagID leaks
    in descriptions, all coords in scope), committed, pushed.

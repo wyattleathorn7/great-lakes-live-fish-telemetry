@@ -39,7 +39,6 @@ import re
 import sys
 import urllib.request
 import xml.etree.ElementTree as ET
-import zipfile
 from collections import defaultdict
 
 try:
@@ -83,6 +82,13 @@ OTN_ERDDAP = ("https://erddap.oceantrack.org/erddap/tabledap/view_otn_aat_receiv
               "&latitude>41&latitude<48.6&longitude>-93&longitude<-76")
 
 TEST_RECEIVER_ID = "412109083063800"  # Sandusky River at Brady's Island, Fremont OH
+
+# Published static-asset URL for the icon. KML cannot embed local images, so
+# the production KML references the published asset at an absolute URL
+# (Google Earth fetches it over HTTP). Mirrors the buoy product's absolute-href
+# pattern (generate_live_kml.py:105).
+ICON_URL = ("https://raw.githubusercontent.com/wyattleathorn7/"
+            "great-lakes-live-fish-telemetry/main/icons/fish_receiver.png")
 
 # Station IDs for unlinked summary rows, resolved from the authoritative USGS
 # science page (https://www.usgs.gov/centers/cm-water/science/real-time-fish-telemetry),
@@ -738,7 +744,7 @@ def build_kml(receivers, statuses):
     style = ET.SubElement(doc, "Style", id="fishReceiver")
     ist = ET.SubElement(style, "IconStyle")
     ET.SubElement(ist, "scale").text = "1.0"
-    ET.SubElement(ET.SubElement(ist, "Icon"), "href").text = "icons/fish_receiver.png"
+    ET.SubElement(ET.SubElement(ist, "Icon"), "href").text = ICON_URL
     for rid in sorted(receivers):
         rec = receivers[rid]
         pm = ET.SubElement(doc, "Placemark")
@@ -1085,21 +1091,15 @@ def main():
             f, indent=2)
     json.dump({"live_version": live_version}, open(state_path, "w"), indent=2)
 
-    def write_kmz(kml_str, kmz_path):
-        icon_src = os.path.join(BASE, "icons", "fish_receiver.png")
-        with zipfile.ZipFile(kmz_path, "w", zipfile.ZIP_DEFLATED) as z:
-            z.writestr("doc.kml", kml_str)
-            z.write(icon_src, "icons/fish_receiver.png")
-
     def publish(kml_str, base):
+        # KML-only production output: *.kml plus the static image asset.
+        # No KMZ/ZIP packaging anywhere in this pipeline.
         kml_path = os.path.join(KMLDIR, base + ".kml")
-        kmz_path = os.path.join(KMLDIR, base + ".kmz")
         changed = True
         if os.path.exists(kml_path):
             changed = open(kml_path, encoding="utf-8").read() != kml_str
         if changed:  # content-aware publish: never rewrite identical output
             open(kml_path, "w", encoding="utf-8").write(kml_str)
-            write_kmz(kml_str, kmz_path)
         return changed
 
     if args.test:
@@ -1114,18 +1114,18 @@ def main():
             kml = build_kml({rid: rec}, {rid: statuses[rid]})
             publish(kml, "TEST_SINGLE_RECEIVER")
             print(f"test KML: {rid} status={statuses[rid]}")
-        # minimal icon test: one placemark + packaged icon, nothing else
+        # minimal icon test: one placemark referencing the published icon, KML only
         mini = ("<?xml version='1.0' encoding='utf-8'?>\n"
                 '<kml xmlns="http://www.opengis.net/kml/2.2"><Document>'
                 "<name>ICON TEST</name>"
                 '<Style id="fishReceiver"><IconStyle><scale>1.0</scale>'
-                "<Icon><href>icons/fish_receiver.png</href></Icon></IconStyle></Style>"
+                f"<Icon><href>{ICON_URL}</href></Icon></IconStyle></Style>"
                 "<Placemark><name>icon test</name><styleUrl>#fishReceiver</styleUrl>"
                 "<description>icon test</description>"
                 "<Point><coordinates>-83.11129,41.35264,0</coordinates></Point>"
                 "</Placemark></Document></kml>")
         publish(mini, "ICON_TEST")
-        print("icon test KMZ written")
+        print("icon test KML written")
     if args.full:
         kml = build_kml(receivers, statuses)
         changed = publish(kml, "LIVE_GREAT_LAKES_FISH_ACOUSTIC_TELEMETRY_RECEIVERS")
