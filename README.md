@@ -2,11 +2,18 @@
 
 Known public acoustic-telemetry receiver network across the Great Lakes, with
 **persistent placemarks** whose **status + live information change automatically**
-as the authoritative sources change. Receiver existence ≠ receiver status: an
-OFFLINE or DISMANTLED receiver stays on the map.
+as the authoritative sources change. Receiver existence ≠ receiver status.
 
-Open `kml/LIVE_GREAT_LAKES_FISH_ACOUSTIC_TELEMETRY_RECEIVERS.kml` in Google Earth.
-Start with the single-receiver proof: `kml/TEST_SINGLE_RECEIVER.kml`.
+Open `kml/LIVE_GREAT_LAKES_FISH_ACOUSTIC_TELEMETRY_RECEIVERS.kmz` in Google
+Earth (KMZ packages the icon, so it renders offline). Start with the
+single-receiver proof: `kml/TEST_SINGLE_RECEIVER.kmz`. `kml/ICON_TEST.kmz`
+verifies the icon alone.
+
+Current inventory: **9,215 placemarks** — 11 ONLINE with live species counts,
+3,157 ONLINE / DATA NOT PUBLIC (deployed per GLATOS map, no public feed),
+3,118 OFFLINE — SEASONAL, 2,446 FINISHED / HISTORICAL, 481 UNCERTAIN,
+2 OFFLINE (live-linked). See `audit/COVERAGE_GAP_REPORT.md` for the
+source-backed accounting.
 
 ## Receiver lifecycle
 
@@ -34,28 +41,34 @@ to `source/fetch_failures.log` and the previous valid KML is retained.
 
 | # | Source | Receivers | Role |
 |---|--------|-----------|------|
-| A | USGS real-time telemetry (live) | 14 linked + seasonal rows | live status + live TagID detections |
+| A | USGS real-time telemetry (live) | 13 placeable | live status + live TagID detections |
 | B | GLATOS deployments via USGS redhorse release (DOI 10.5066/P13H22V6) | 565 unique stations | Erie/Sandusky/Cuyahoga existence + history |
 | C | GLATOS deployments via USGS sturgeon release (DOI 10.5066/P142JQOJ) | 3,990 unique stations | Huron–Erie corridor + connected waters |
 | D | OTN ERDDAP `view_otn_aat_receivers` (Great Lakes bbox) | 386 unique receivers | basin-wide deployments + projects |
+| E | GLATOS public map (`glatos.org/map`, Ongoing/Proposed/Finished) | 9,928 station identities | current deployment status + missing stations |
 
-Dedupe: exact station-ID merge across B/C (+456), 150 m proximity merge across
-all sources (+707, e.g. live Brady's Island = GLATOS `LSR-021`), all provenance
-URLs retained per placemark. Current total: **3,791 placemarks**
-(10 ONLINE, 3 OFFLINE live-linked, remainder OFFLINE historical).
+Dedupe: 456 exact-ID merges + 513 equivalent-code merges (same
+`(ALPHA, NUMBER)` station code across naming conventions, co-located;
+identical codes at distance kept as one redeployed station). Distinct station
+numbers are never merged. Every merge logs evidence (`audit/merge_review.json`).
 
 Consulted but excluded with reasons (`source/provenance.json`): GLATOS member
-portal (login-only), RAFT ReceiverMap (no public bulk API), MI DNR Macatawa
-muskie receivers (no public coords), USGS salmon/whitefish releases (no receiver
-tables), 5 live rows without authoritative coords (incl. malformed ID
-`412652509111316` and 4 `Discontinued` rows) — never geocoded or invented.
+portal (login-only detections), RAFT ReceiverMap (no public bulk API),
+MI DNR Macatawa muskie receivers (no public coords), USGS salmon/whitefish
+releases (no receiver tables), 5 live rows without authoritative coords
+(incl. malformed ID `412652509111316` and 4 `Discontinued` rows) — never
+geocoded or invented.
 
-## Species honesty
+## Species (TagID → species layer)
 
-The live feed publishes **TagIDs, not species** (species summaries go to
-subscribers / RAFT lookup). Placemarks therefore report TagID-level live counts
-and never invent a species list. Historical receivers cite their project context
-(redhorse 2022–2025, sturgeon 2011–2024, OTN project codes) as last-known only.
+Live feeds publish TagIDs. `scripts/species.py` resolves each tag —
+RAFT transmitter lookup → OTN animal releases → USGS tag-metadata files —
+into `data/tag_species_cache.json`, retried hourly. Unresolvable tags stay
+`UNRESOLVED_TAG` (counted, never invented). Descriptions list the live-system
+species one per line with zeros (currently Silver/Bighead/Common Carp),
+24 h reporting window, 7-day detection history (`data/detection_history.json`)
+with aging to 0. Counts are detection events, never fish. ONLINE + zero stays
+ONLINE. No raw TagIDs in descriptions.
 
 ## Coordinates
 
@@ -65,23 +78,28 @@ coordinates for GLATOS/OTN records. Method per placemark in `coord_method`.
 
 ## Icon
 
-`icons/fish_receiver.png` — 64×64 RGBA, genuinely transparent, antialiased.
-The specified `custom icons/fish copy3.png` was **not present** in the workspace
-and the buoy KMZs use default pushpins (no custom buoy icon asset exists), so a
-replacement fish icon was generated; drop the real `fish copy3.png` into
-`custom icons/` and re-run the icon step to adopt it (see
-`custom icons/README.md`).
+`icons/fish_receiver.png` — 64×64 RGBA, 8-bit truecolor+alpha, genuinely
+transparent, minimal chunks (IHDR/IDAT/IEND only, no ICC), verified
+programmatically. KML references `icons/fish_receiver.png`, which resolves
+both next to a standalone KML and packaged inside the KMZs (`doc.kml` +
+`icons/fish_receiver.png`), fixing the unsupported-format/relative-path
+failure. No buoy icon asset exists anywhere (buoy KMZs use default pushpins),
+so there were no buoy dimensions to match — documented in
+`custom icons/README.md`; drop the real `fish copy3.png` there to adopt it.
 
 ## Automation
 
-`.github/workflows/update.yml` runs hourly: fetch → source-version check (skip if
-unchanged) → classify → update counts/timestamps/history → publish KML.
-`OFFLINE → ONLINE` recovery is automatic by stable ID.
+`.github/workflows/update.yml` runs hourly: fetch → source-version check
+(content-aware publish: identical bytes are never republished) → classify →
+resolve new TagIDs → update 24 h counts / 7-day history / timestamps →
+publish KML+KMZ. `OFFLINE → ONLINE` recovery is automatic by stable ID.
 
 ## Layout
 
 ```
-├── icons/fish_receiver.png   kml/*.kml   data/{live_receivers,live_detections,
-│   receiver_status_history,source_state}.json   source/{provenance.json,
-│   fetch_failures.log,cache/}   scripts/generate_fish_receivers.py
+├── icons/fish_receiver.png   kml/*.kml + *.kmz (KMZ = doc.kml + packaged icon)
+│   data/{live_receivers,live_detections,detection_history,last_known_species,
+│   tag_species_cache,receiver_status_history,source_state}.json
+│   source/{provenance.json,fetch_failures.log,cache/}
+│   scripts/{generate_fish_receivers.py,species.py,audit.py}   audit/
 ```

@@ -1,0 +1,90 @@
+# Coverage gap report — post-build audit 2026-09-23 (final, after corrections)
+
+Final inventory: **9,215 placemarks** (`ACCOUNTING.json` regenerated post-fix).
+
+## Question 1: Why 9,215 placemarks, and how many are currently deployed?
+
+| Lifecycle (evidence-based) | Count |
+|---|---:|
+| ONLINE (USGS live feed reporting) | 11 |
+| ONLINE / DATA NOT PUBLIC (GLATOS map status = Ongoing, no public TagID feed) | 3,157 |
+| OFFLINE — SEASONAL (removed-for-season or Finished+seasonal) | 3,118 |
+| FINISHED / HISTORICAL (recovered, non-seasonal) | 2,446 |
+| UNCERTAIN (Proposed / Unknown / no status evidence) | 481 |
+| OFFLINE (live-linked stale) | 2 |
+
+Currently deployed ≈ **3,168** (11 live + 3,157 ongoing). Geography now covers
+all lakes: erie 2,005 · ontario 1,780 · huron 1,633 · connected_tributary 1,604
+· michigan 958 · superior 984 · stclair_detroit 249.
+
+## Question 2: Why only ~10 ONLINE with live TagID data?
+
+Receiver-by-receiver: the only public live/near-real-time TagID feed found is
+the USGS CMWSC network (hourly, 5-minute records). Re-verified: 12 linked
+stations + 2 seasonal-resolvable + 4 discontinued-without-coords. Of the
+live-linked: 10 reporting within the 30 h freshness threshold, 1 stale
+(Des Plaines above Brandon Road, last 2026-09-18), 2 removed for season
+(Credit Island, Carthage Lake). No other live TagID feed was found in
+GLATOS (member-only detections), RAFT (lookup only, no live stream), or OTN
+ERDDAP (deployments/detections archives). 3,157 GLATOS-Ongoing receivers have
+no public detection stream — hence ONLINE / DATA NOT PUBLIC, not OFFLINE.
+
+## Source accounting
+
+| Source | Raw records | Unique receivers |
+|---|---:|---:|
+| USGS live summary | 18 rows (12 linked + 6 status rows) | 13 placeable |
+| GLATOS redhorse DOI 10.5066/P13H22V6 | 1,176 deployments | 565 stations |
+| GLATOS sturgeon DOI 10.5066/P142JQOJ | 12,047 deployments | 3,990 stations |
+| OTN ERDDAP Great Lakes bbox | 797 deployments | 386 receivers |
+| GLATOS public map (`/map/get`) | 33,808 pins | 9,403 (project,array,station) identities; 3,198 ongoing |
+
+Exact-ID merges (redhorse∩sturgeon): 456. Equivalent-code merges: 513.
+**2,520 ongoing map identities were missing from the pre-audit repo — all
+added** (5,208 map identities added in total; residual check found zero true
+gaps, only a metric artifact on alphanumeric array codes). Zero duplicate
+ARR-STN groups remain.
+
+## False-merge finding (§4)
+
+The 150 m proximity merge consolidated distinct neighboring stations
+(e.g. `SBI-009` + `SBI-010`, 92 m apart — different station numbers).
+Proximity alone is not evidence. Correction: merge only on
+(1) identical receiver ID, (2) equivalent station code across naming
+conventions (e.g. `CBG-081` = `V2LGLFC_CBG_081`), or (3) live-station attach
+within 150 m. All other pairs stay separate; every merge records evidence.
+
+## False-offline finding (§6)
+
+No currently-reporting receiver was found misclassified: every USGS-linked
+station's status follows the source timestamp/state. The real defect was
+coarser labeling — deployed-without-feed receivers were called OFFLINE.
+Correction applied: `ONLINE / DATA NOT PUBLIC` from GLATOS Ongoing status
+(3,157 receivers).
+
+## Geographic coverage (final KML)
+
+erie 2,005 · ontario 1,780 · huron 1,633 · connected_tributary 1,604 ·
+michigan 958 · superior 984 · stclair_detroit 249. Superior/Ontario/Michigan
+grew ~5–13× after adding missing ongoing map stations.
+
+## Live-data availability (final)
+
+live/near-live feed 11 · deployed-no-public-feed 3,156 ·
+historical-only 5,578 · no public detection data 468.
+
+## Corrections applied
+
+1. Ingested GLATOS map identities (missing ongoing + finished/seasonal/proposed/unknown).
+2. Strict merge policy + evidence log (kept in `merge_review.json`).
+3. Lifecycle categories incl. ONLINE / DATA NOT PUBLIC, UNCERTAIN, seasonal split.
+4. TagID→species layer (RAFT/OTN/USGS metadata + cache + retry), species-per-line
+   descriptions, 24 h window + 7-day aging history, hourly workflow.
+   Resolved live-system species: Silver Carp, Bighead Carp, Common Carp,
+   Silver Carp/Bighead Carp, Common Carp/Goldfish; 13 tags (incl. Sandusky
+   A69-1601-62xxx) remain UNRESOLVED_TAG across all four metadata sources —
+   counted without IDs, retried hourly, never invented.
+5. Valid RGBA icon (IHDR/IDAT/IEND only) + KMZ packaging (`icons/` inside KMZ),
+   minimal icon test first (`ICON_TEST.kmz`).
+6. Re-validated test receiver + full inventory (9,215 placemarks, 0 TagID leaks
+   in descriptions, all coords in scope), committed, pushed.

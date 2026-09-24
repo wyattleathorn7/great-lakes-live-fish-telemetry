@@ -1,0 +1,75 @@
+{
+  "generated_utc": "2026-09-24T01:34:39.591368+00:00",
+  "live_page_modified": "2026-09-23 19:30 CDT",
+  "pins_file": "glatos_map_pins_20260923.json",
+  "sources": {
+    "USGS_live": {
+      "raw_records": 18,
+      "linked_stations": 12,
+      "unlinked_status_rows": 6,
+      "live_feed": true
+    },
+    "GLATOS_redhorse_DOI_10.5066/P13H22V6": {
+      "raw_deployments": 1176,
+      "unique_stations": 565,
+      "live_feed": false
+    },
+    "GLATOS_sturgeon_DOI_10.5066/P142JQOJ": {
+      "raw_deployments": 12047,
+      "unique_stations": 3990,
+      "live_feed": false
+    },
+    "OTN_ERDDAP_GL_bbox": {
+      "raw_deployments": 797,
+      "unique_receivers": 386,
+      "live_feed": false
+    },
+    "GLATOS_map_public": {
+      "raw_pins": 33808,
+      "unique_identities_proj_array_stn": 9403,
+      "ongoing_identities": 3198,
+      "live_feed": false
+    }
+  },
+  "map_status_counts": {
+    "Finished": 29736,
+    "Ongoing": 3274,
+    "Proposed": 88,
+    "Unknown - deployed > 2 years without a recovery": 710
+  },
+  "overlaps": {
+    "exact_id_redhorse_sturgeon": 456,
+    "ongoing_map_identities_missing_from_repo": 2520
+  },
+  "inventory": {
+    "unique_placemarks": 9213,
+    "exact_merges": 456,
+    "proximity_merges": 513,
+    "merges_coords_only_no_supporting_evidence": 0,
+    "merges_with_supporting_evidence": 969,
+    "excluded_no_coords": 7
+  },
+  "lifecycle": {
+    "ONLINE / DATA NOT PUBLIC": 3156,
+    "ONLINE": 11,
+    "FINISHED / HISTORICAL": 2460,
+    "OFFLINE \u2014 SEASONAL": 3118,
+    "UNCERTAIN": 468
+  },
+  "geo_bins": {
+    "connected_tributary": 1604,
+    "erie": 2005,
+    "stclair_detroit": 249,
+    "huron": 1633,
+    "ontario": 1780,
+    "michigan": 958,
+    "superior": 984
+  },
+  "live_data_availability": {
+    "deployed, no public feed": 3156,
+    "live/near-live feed": 11,
+    "historical-only": 5578,
+    "no public detection data": 468
+  },
+  "otn_error": ""
+}

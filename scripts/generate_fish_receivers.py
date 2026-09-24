@@ -31,6 +31,7 @@ import argparse
 import csv
 import datetime as dt
 import html
+import http.cookiejar
 import json
 import math
 import os
@@ -38,7 +39,13 @@ import re
 import sys
 import urllib.request
 import xml.etree.ElementTree as ET
+import zipfile
 from collections import defaultdict
+
+try:
+    from species import resolve as resolve_species, UNRESOLVED
+except ImportError:  # allow audit.py import without species side effects
+    resolve_species, UNRESOLVED = None, "UNRESOLVED_TAG"
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(BASE, "data")
@@ -180,7 +187,8 @@ def classify_live(st, now_utc):
 
 
 def parse_station_page(page):
-    """Parse 5-minute records. Returns (last_update, last_detection, events_24h, uniq_24h, tag_counts)."""
+    """Parse 5-minute records. Returns (last_update, last_detection, events_24h,
+    uniq_24h, tag_counts, all_rows). Rows are (datetime, VRTagCount, [tags])."""
     text = page.decode("utf-8", errors="ignore")
     rows = re.findall(
         r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\s*</td>\s*<td[^>]*>\s*(\d+)\s*</td>\s*"
@@ -201,7 +209,7 @@ def parse_station_page(page):
         taglist = [x.strip() for x in tags.split(",") if x.strip() and re.match(r"A\d+-", x.strip())]
         recs.append((t, tc, utc, taglist))
     if not recs:
-        return None, None, 0, 0, {}
+        return None, None, 0, 0, {}, []
     recs.sort()
     last_update = recs[-1][0]
     cutoff = last_update - dt.timedelta(hours=24)
@@ -212,7 +220,8 @@ def parse_station_page(page):
             for tag in taglist:
                 tag_counts[tag] = tag_counts.get(tag, 0) + 1
                 det_times.append(t)
-    return last_update, (max(det_times) if det_times else None), events, len(tag_counts), tag_counts
+    return (last_update, (max(det_times) if det_times else None), events,
+            len(tag_counts), tag_counts, recs)
 
 
 # ---------------- Sources B/C/D ----------------
@@ -271,6 +280,105 @@ def load_sturgeon():
     return out
 
 
+def load_glatos_map(refresh=True):
+    """GLATOS public map pins (authoritative current deployment inventory).
+
+    Returns {identity_key: info} with identity (project, array, station).
+    Refreshes via the map's own POST endpoint with a session cookie;
+    falls back to the newest cached snapshot in source/cache/.
+    """
+    def newest_cache():
+        cands = sorted(f for f in os.listdir(CACHE) if f.startswith("glatos_map_pins_"))
+        return os.path.join(CACHE, cands[-1]) if cands else None
+
+    if refresh:
+        cached = newest_cache()
+        try:
+            stale = True
+            if cached:
+                age_h = (dt.datetime.now().timestamp() - os.path.getmtime(cached)) / 3600
+                stale = age_h > 20
+            if not stale:
+                d = json.load(open(cached))
+                return index_map_pins(d["Pins"]), ""
+            cj = http.cookiejar.CookieJar()
+            op = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(cj))
+            op.open(urllib.request.Request(
+                "https://glatos.org/map",
+                headers={"User-Agent": "great-lakes-live-fish-telemetry/1.0"}),
+                timeout=40).read()
+            req = urllib.request.Request(
+                "https://glatos.org/map/get", data=b"",
+                headers={"User-Agent": "great-lakes-live-fish-telemetry/1.0",
+                         "Content-Length": "0"})
+            raw = op.open(req, timeout=120).read()
+            d = json.loads(raw.decode("utf-8", errors="ignore"))
+            if "Pins" in d:
+                day = dt.datetime.now(dt.timezone.utc).strftime("%Y%m%d")
+                with open(os.path.join(CACHE, f"glatos_map_pins_{day}.json"), "wb") as f:
+                    f.write(raw)
+                return index_map_pins(d["Pins"]), ""
+        except Exception as e:
+            cached = newest_cache()
+            if cached:
+                d = json.load(open(cached))
+                return index_map_pins(d["Pins"]), f"map refresh failed ({e}); using {cached}"
+            return {}, f"map refresh failed and no cache: {e}"
+    cached = newest_cache()
+    if cached:
+        return index_map_pins(json.load(open(cached))["Pins"]), ""
+    return {}, "no map cache available"
+
+
+def index_map_pins(pins):
+    """Collapse deployment pins to station identities.
+
+    identity = (project, array, station). Coords = latest DeployDate pin.
+    Status rollup: Ongoing > Unknown > Proposed > Finished (most active wins).
+    """
+    rank = {"Ongoing": 3, "Unknown - deployed > 2 years without a recovery": 2,
+            "Proposed": 1, "Finished": 0}
+    groups = {}
+    for p in pins:
+        try:
+            lat, lon = float(p["Lat"]), float(p["Long"])
+        except (ValueError, TypeError, KeyError):
+            continue
+        key = ((p.get("Project") or "").strip(), (p.get("Array") or "").strip().upper(),
+               str(p.get("StationNo") or "").strip().upper())
+        g = groups.setdefault(key, {"pins": [], "projects": set(), "models": set(),
+                                    "seasonal": False, "short_titles": set()})
+        g["pins"].append(p)
+        g["models"].add(str(p.get("ModelNo") or ""))
+        g["short_titles"].add(str(p.get("ShortTitle") or ""))
+        if str(p.get("Seasonal")).lower() == "yes":
+            g["seasonal"] = True
+    out = {}
+    for key, g in groups.items():
+        g["pins"].sort(key=lambda p: str(p.get("DeployDate") or ""))
+        last = g["pins"][-1]
+        best = max(g["pins"], key=lambda p: rank.get(p.get("Status"), 0))
+        try:
+            clat, clon = float(last["Lat"]), float(last["Long"])
+        except (ValueError, TypeError):
+            continue
+        out[key] = {
+            "lat": clat, "lon": clon,
+            "status": best.get("Status", "Unknown"),
+            "seasonal": g["seasonal"],
+            "projects": {key[0]} if key[0] else set(),
+            "arrays": {key[1]} if key[1] else set(),
+            "models": {m for m in g["models"] if m},
+            "deploys": sorted({str(p.get("DeployDate") or "") for p in g["pins"] if p.get("DeployDate")}),
+            "recovers": sorted({str(p.get("RecoverDate") or "") for p in g["pins"] if p.get("RecoverDate")}),
+            "short_titles": {t for t in g["short_titles"] if t},
+            "n_pins": len(g["pins"]),
+        }
+    return out
+
+
+# ---------------- Union + dedupe ----------------
+
 def load_otn_live():
     """Fetch OTN Great Lakes receiver deployments (public ERDDAP)."""
     try:
@@ -305,8 +413,6 @@ def load_otn_live():
     return out, ""
 
 
-# ---------------- Union + dedupe ----------------
-
 def haversine_m(a, b):
     R = 6371000.0
     p1, p2 = math.radians(a[0]), math.radians(b[0])
@@ -316,9 +422,49 @@ def haversine_m(a, b):
     return 2 * R * math.asin(math.sqrt(h))
 
 
-def build_inventory(live_stations):
+def station_token(name):
+    """(ALPHA, NUMBER) trailing station code.
+
+    'CBG-081' -> ('CBG','81'); 'V2LGLFC_CBG_081' -> ('CBG','81');
+    'LEG-615' -> ('LEG','615'). Used only as merge evidence together with
+    co-location or identical IDs — never proximity alone.
+    """
+    if not name:
+        return (None, None)
+    parts = [p for p in re.split(r"[-_]", name.strip().upper()) if p]
+    if not parts:
+        return (None, None)
+    m = re.fullmatch(r"([A-Z]+)(\d+)", parts[-1])
+    if m:
+        return (re.sub(r"\d", "", m.group(1)) or None, m.group(2).lstrip("0") or "0")
+    if re.fullmatch(r"\d+", parts[-1]) and len(parts) >= 2:
+        alpha = re.sub(r"[^A-Z]", "", parts[-2])
+        return (alpha or None, parts[-1].lstrip("0") or "0")
+    return (None, None)
+
+
+def geo_bin(lat, lon):
+    if 42.2 <= lat <= 43.15 and -83.55 <= lon <= -82.25:
+        return "stclair_detroit"
+    if 41.3 <= lat <= 42.95 and -83.55 <= lon <= -78.85:
+        return "erie"
+    if 43.0 <= lat <= 44.25 and -80.0 <= lon <= -76.0:
+        return "ontario"
+    if 43.0 <= lat <= 46.3 and -84.9 <= lon <= -79.7:
+        return "huron"
+    if 41.6 <= lat <= 46.15 and -88.2 <= lon <= -85.5:
+        return "michigan"
+    if 46.35 <= lat <= 48.3 and -92.6 <= lon <= -84.2:
+        return "superior"
+    if 40.5 <= lat <= 49.5 and -93.5 <= lon <= -73.0:
+        return "connected_tributary"
+    return "out_of_scope"
+
+
+def build_inventory(live_stations, refresh_map=True):
     receivers = {}  # rid -> record
-    stats = {"exact_merges": 0, "proximity_merges": 0, "excluded_no_coords": []}
+    stats = {"exact_merges": 0, "proximity_merges": 0, "excluded_no_coords": [],
+             "merge_log": []}
 
     def add_hist(rid, name, lat, lon, source_tag, source_url, extra):
         if rid in receivers:
@@ -328,6 +474,8 @@ def build_inventory(live_stations):
             for k in ("projects", "arrays", "models", "deploys", "recovers"):
                 rec[k].update(extra.get(k, set()))
             stats["exact_merges"] += 1
+            stats["merge_log"].append({"type": "exact-id", "kept": rid,
+                                       "evidence": f"identical receiver ID {rid} in {source_tag}"})
             return rec
         rec = {"rid": rid, "name": name, "lat": lat, "lon": lon,
                "coord_method": extra.get("coord_method", "authoritative source file"),
@@ -338,9 +486,22 @@ def build_inventory(live_stations):
                "models": set(extra.get("models", set())),
                "deploys": set(extra.get("deploys", set())),
                "recovers": set(extra.get("recovers", set())),
-               "live": None}
+               "map_info": [], "live": None}
         receivers[rid] = rec
         return rec
+
+    def absorb(keep, drop, mtype, evidence, dist=None):
+        keep["sources"].update(drop["sources"])
+        keep["source_urls"].update(drop["source_urls"])
+        for k in ("projects", "arrays", "models", "deploys", "recovers"):
+            keep[k].update(drop[k])
+        keep["map_info"].extend(drop.get("map_info", []))
+        keep["name"] = keep["name"] if keep["name"] else drop["name"]
+        entry = {"type": mtype, "kept": keep["rid"], "dropped": drop["rid"],
+                 "evidence": evidence}
+        if dist is not None:
+            entry["distance_m"] = round(dist, 1)
+        stats["merge_log"].append(entry)
 
     red = load_redhorse()
     for sid, s in red.items():
@@ -367,33 +528,86 @@ def build_inventory(live_stations):
                   "deploys": set(s["deploys"]), "recovers": set(s["recovers"]),
                   "coord_method": "OTN ERDDAP view_otn_aat_receivers deployment coordinates"})
 
-    # proximity merge via grid hashing (150 m): OTN<->GLATOS and live<->GLATOS/OTN
-    cell = defaultdict(list)
+    # GLATOS public map ingest: match (array, station) to existing GLATOS rids,
+    # else create in-scope identities. Map status evidence stored per project.
+    gmap, map_err = load_glatos_map(refresh=refresh_map)
+    stats["map_error"] = map_err
+    stats["map_identities"] = len(gmap)
+    token_index = {}
     for rid, rec in receivers.items():
-        cell[(round(rec["lat"], 2), round(rec["lon"], 2))].append(rid)
-    merged_into = {}
-    dure = list(receivers)
-    for rid in dure:
-        if rid in merged_into:
+        if rid.startswith("GLATOS-"):
+            token_index.setdefault(station_token(rec["name"]), []).append(rid)
+    map_matched, map_added, map_out_of_scope = 0, 0, []
+    for (proj, arr, stn), info in gmap.items():
+        tok = (arr, (stn or "").lstrip("0") or "0")
+        existing = [r for r in token_index.get(tok, []) if r in receivers]
+        entry = {"project": proj, "status": info["status"], "seasonal": info["seasonal"],
+                 "short_titles": sorted(info["short_titles"])[:3],
+                 "n_pins": info["n_pins"]}
+        if existing:
+            rec = receivers[existing[0]]
+            rec["sources"].add("GLATOS/map")
+            rec["source_urls"].add("https://glatos.org/map")
+            for k in ("projects", "arrays", "models", "deploys", "recovers"):
+                rec[k].update(info[k] if k in info else set())
+            rec["projects"].update(info["projects"])
+            rec["map_info"].append(entry)
+            map_matched += 1
+        elif geo_bin(info["lat"], info["lon"]) == "out_of_scope":
+            map_out_of_scope.append(f"{proj}-{arr}-{stn}")
+        else:
+            rid = f"GLATOSMAP-{proj}-{arr}-{stn}" if proj else f"GLATOSMAP-{arr}-{stn}"
+            receivers[rid] = {
+                "rid": rid, "name": f"{arr}-{stn}", "lat": info["lat"], "lon": info["lon"],
+                "coord_method": "GLATOS public map latest deployment pin",
+                "network": "GLATOS (map inventory)",
+                "sources": {"GLATOS/map"}, "source_urls": {"https://glatos.org/map"},
+                "projects": set(info["projects"]), "arrays": set(info["arrays"]),
+                "models": set(info["models"]), "deploys": set(info["deploys"]),
+                "recovers": set(info["recovers"]), "map_info": [entry], "live": None}
+            token_index.setdefault(tok, []).append(rid)
+            map_added += 1
+    stats["map_matched"] = map_matched
+    stats["map_added"] = map_added
+    stats["map_out_of_scope"] = map_out_of_scope
+
+    # strict token merge: same (ALPHA, NUMBER) station code only, with evidence.
+    # Different station numbers are NEVER merged (audit finding: SBI-009 vs SBI-010).
+    groups = defaultdict(list)
+    for rid, rec in receivers.items():
+        if rid.startswith("USGS-LIVE-"):
             continue
-        rec = receivers[rid]
-        for dx in (-1, 0, 1):
-            for dy in (-1, 0, 1):
-                for other in cell.get((round(rec["lat"], 2) + dx * 0.01,
-                                       round(rec["lon"], 2) + dy * 0.01), []):
-                    if other == rid or other in merged_into:
-                        continue
-                    o = receivers[other]
-                    if haversine_m((rec["lat"], rec["lon"]), (o["lat"], o["lon"])) <= 150:
-                        # keep GLATOS named receiver as primary when present
-                        keep, drop = (rec, o) if rec["rid"].startswith("GLATOS") else (o, rec)
-                        keep["sources"].update(drop["sources"])
-                        keep["source_urls"].update(drop["source_urls"])
-                        for k in ("projects", "arrays", "models", "deploys", "recovers"):
-                            keep[k].update(drop[k])
-                        keep["name"] = keep["name"] if keep["name"] else drop["name"]
-                        merged_into[drop["rid"]] = keep["rid"]
-                        stats["proximity_merges"] += 1
+        groups[station_token(rec["name"])].append(rid)
+    merged_into = {}
+    for tok, rids in groups.items():
+        if tok == (None, None) or len(rids) < 2:
+            continue
+        rids = [r for r in rids if r in receivers and r not in merged_into]
+        base = None
+        for r in rids:
+            if receivers[r]["rid"].startswith("GLATOS-") and not receivers[r][
+                    "rid"].startswith("GLATOSMAP-"):
+                base = r
+                break
+        base = base or rids[0]
+        for r in rids:
+            if r == base or r in merged_into:
+                continue
+            d = haversine_m((receivers[base]["lat"], receivers[base]["lon"]),
+                            (receivers[r]["lat"], receivers[r]["lon"]))
+            keep, drop = receivers[base], receivers[r]
+            if not keep["rid"].startswith("GLATOS-"):
+                keep, drop = drop, keep
+            if d <= 150:
+                absorb(keep, drop, "token-colocated",
+                       f"equivalent station code {tok[0]}-{tok[1]} within 150 m across "
+                       f"naming conventions ({keep['rid']} / {drop['rid']})", d)
+            else:
+                absorb(keep, drop, "token-redeployed",
+                       f"identical station code {tok[0]}-{tok[1]} at distinct locations; "
+                       f"kept {keep['rid']} coords, full history retained", d)
+            stats["proximity_merges"] += 1
+            merged_into[drop["rid"]] = keep["rid"]
     for rid in merged_into:
         receivers.pop(rid, None)
 
@@ -424,6 +638,12 @@ def build_inventory(live_stations):
             target["network"] = "USGS Real-Time Fish Telemetry + GLATOS/OTN deployments"
             if target["rid"].startswith("GLATOS") or target["rid"].startswith("OTN"):
                 stats["proximity_merges"] += 1
+                stats["merge_log"].append({
+                    "type": "live-attach", "kept": target["rid"],
+                    "live_sid": sid, "live_name": st["name"],
+                    "distance_m": round(haversine_m(
+                        coords, (target["lat"], target["lon"])), 1),
+                    "evidence": "live station coordinates within 150 m of deployment record"})
         target["live"] = st
     return receivers, stats
 
@@ -434,62 +654,45 @@ def esc(s):
     return html.escape(s or "", quote=False)
 
 
-def description(rec, status, live_detail):
-    L = []
-    L.append("🐟 LIVE ACOUSTIC TELEMETRY RECEIVER")
-    L.append("")
-    L.append(f"Receiver: {rec['name']}")
-    L.append(f"Status: {status}")
-    if live_detail and status == "ONLINE":
-        d = live_detail
-        L.append(f"Last source update: {d['last_update']} (source tz, see source)")
-        L.append(f"Last fish detection: {d['last_detection'] or 'none in window'}")
-        L.append(f"Reporting period: previous 24 h ending {d['last_update']}")
-        L.append("")
-        L.append("FISH DETECTIONS (live TagID level; species attribution via RAFT/subscription)")
-        L.append(f"Unique tags (24 h): {d['uniq']} / detection events (24 h): {d['events']}")
-        for tag in sorted(d["tag_counts"]):
-            L.append(f"{tag}: {d['tag_counts'][tag]} detections (tag detection events, NOT fish)")
-        if not d["tag_counts"]:
-            for tag in ("(no tag detections in reporting period) (= 0)",):
-                L.append(tag)
-    elif live_detail and status == "OFFLINE":
-        d = live_detail
-        L.append("")
-        L.append("Current live detections: UNAVAILABLE")
-        L.append(f"Last live update: {d.get('last_update', 'unknown')}")
+def description(rec, status, ctx):
+    """User-facing placemark description: species + counts, concise receiver info."""
+    L = ["\U0001F41F LIVE ACOUSTIC TELEMETRY RECEIVER", "",
+         f"Receiver: {rec['name']}", f"Status: {status}"]
+    d = ctx or {}
+    if d.get("last_update"):
+        L.append(f"Last source update: {d['last_update']}")
+    if d.get("last_detection"):
+        L.append(f"Last fish detection: {d['last_detection']}")
+    if status == "ONLINE":
+        L += ["Reporting period: Previous 24 h", "",
+              "FISH SPECIES DETECTIONS", "Species detections \u2014 previous 24 h"]
+        for sp in d.get("species_order", []):
+            L.append(f"{sp}: {d['species_counts'].get(sp, 0)}")
+        if d.get("unresolved_events"):
+            L.append(f"Unresolved tag detections: {d['unresolved_events']} "
+                      "detection events (species pending resolution)")
+        L.append("Counts are tag detection events, not fish abundance.")
+    elif status == "OFFLINE":
+        L += ["", "Current live detections: UNAVAILABLE"]
         if d.get("reason"):
             L.append(f"Reason: {d['reason']}")
-        if d.get("tag_counts"):
-            L.append("")
-            L.append("LAST KNOWN LIVE DATA (not current)")
-            L.append(f"Reporting period: {d.get('period', 'previous 24 h')}")
-            for tag in sorted(d["tag_counts"]):
-                L.append(f"{tag}: {d['tag_counts'][tag]} detections")
+        if d.get("last_known"):
+            L += ["", "LAST KNOWN LIVE DATA (not current)"] + d["last_known"]
     else:
-        dep = sorted(rec["deploys"]) if rec["deploys"] else []
-        recov = sorted(rec["recovers"]) if rec["recovers"] else []
-        L.append("")
-        L.append("Current live detections: UNAVAILABLE")
-        if rec.get("reason"):
-            L.append(f"Reason: {rec['reason']}")
-        if dep:
-            L.append(f"Last documented deployment: {dep[-1]}")
-        if recov:
-            L.append(f"Last documented recovery: {recov[-1]}")
-        if rec["projects"]:
-            L.append(f"Projects: {', '.join(sorted(rec['projects'])[:6])}")
-    L.append("")
-    L.append("RECEIVER")
-    L.append(f"Receiver ID: {rec['rid']}")
-    L.append(f"Network: {rec['network']}")
-    if rec["arrays"]:
-        L.append(f"Array: {', '.join(sorted(rec['arrays'])[:4])}")
-    L.append(f"Waterbody: {rec.get('waterbody', 'Great Lakes basin / connected waters')}")
-    L.append(f"Coordinates: {rec['lat']:.6f}, {rec['lon']:.6f} ({rec['coord_method'][:80]})")
-    L.append("")
-    L.append("SOURCE")
-    for u in sorted(rec["source_urls"]):
+        if d.get("reason"):
+            L += ["", f"Note: {d['reason']}"]
+        if d.get("last_deploy"):
+            L.append(f"Last documented deployment: {d['last_deploy']}")
+        if d.get("last_recover"):
+            L.append(f"Last documented recovery: {d['last_recover']}")
+        if rec.get("projects"):
+            L.append(f"Projects: {', '.join(sorted(rec['projects'])[:4])}")
+    L += ["", f"Receiver ID: {rec['rid']}"]
+    if rec.get("arrays"):
+        L.append(f"Array: {', '.join(sorted(rec['arrays'])[:3])}")
+    L.append(f"Coordinates: {rec['lat']:.6f}, {rec['lon']:.6f}")
+    L += ["", "Source:"]
+    for u in sorted(rec["source_urls"])[:4]:
         L.append(u)
     return "\n".join(L)
 
@@ -501,14 +704,14 @@ def build_kml(receivers, statuses):
     style = ET.SubElement(doc, "Style", id="fishReceiver")
     ist = ET.SubElement(style, "IconStyle")
     ET.SubElement(ist, "scale").text = "1.0"
-    ET.SubElement(ET.SubElement(ist, "Icon"), "href").text = "../icons/fish_receiver.png"
+    ET.SubElement(ET.SubElement(ist, "Icon"), "href").text = "icons/fish_receiver.png"
     for rid in sorted(receivers):
         rec = receivers[rid]
         pm = ET.SubElement(doc, "Placemark")
         ET.SubElement(pm, "name").text = f"[{statuses[rid]}] {rec['name']}"
         ET.SubElement(pm, "styleUrl").text = "#fishReceiver"
         desc = ET.SubElement(pm, "description")
-        desc.text = "<![CDATA[" + description(rec, statuses[rid], rec.get("live_detail")) + "]]>"
+        desc.text = "<![CDATA[" + description(rec, statuses[rid], rec.get("desc_ctx")) + "]]>"
         pt = ET.SubElement(pm, "Point")
         ET.SubElement(pt, "coordinates").text = f"{rec['lon']:.6f},{rec['lat']:.6f},0"
     ET.indent(root)
@@ -550,55 +753,183 @@ def main():
         prev = json.load(open(state_path))
     live_version = (page_mod or "") + "|" + "|".join(
         sorted(f"{s.get('sid')}:{s.get('stamp_text')}" for s in live_stations))
+    # ensure map freshness before the source-aware skip check
+    try:
+        load_glatos_map(refresh=True)
+    except Exception as e:
+        print(f"map pre-refresh note: {e}")
+    map_caches = sorted(f for f in os.listdir(CACHE) if f.startswith("glatos_map_pins_"))
+    live_version += "|map:" + (map_caches[-1] if map_caches else "none")
     if not args.force and prev.get("live_version") == live_version and not args.test:
         print("Live source unchanged; skipping republish (source-aware update).")
         return 0
 
     receivers, stats = build_inventory(live_stations)
 
-    # classify + fetch live details for live-linked receivers
-    statuses, live_receivers, live_detections = {}, [], []
+    failures = []
+    # ---- lifecycle classification ----
+    statuses = {}
+    for rid, rec in receivers.items():
+        st = rec.get("live")
+        if st is not None:
+            status, reason = classify_live(st, now_utc)
+            statuses[rid] = status
+            rec["status_reason"] = reason
+            continue
+        mi = rec.get("map_info") or []
+        mstats = {m["status"] for m in mi}
+        if "Ongoing" in mstats:
+            statuses[rid] = "ONLINE / DATA NOT PUBLIC"
+            rec["status_reason"] = ("GLATOS map status Ongoing: receiver deployed, "
+                                    "detection stream not publicly exposed")
+        elif mstats == {"Proposed"}:
+            statuses[rid] = "UNCERTAIN"
+            rec["status_reason"] = "GLATOS map status Proposed (planned, not yet deployed)"
+        elif any(s.startswith("Unknown") for s in mstats):
+            statuses[rid] = "UNCERTAIN"
+            rec["status_reason"] = "GLATOS map: deployed >2 years without a recovery"
+        elif "Finished" in mstats:
+            seasonal = any(m.get("seasonal") for m in mi)
+            statuses[rid] = "OFFLINE \u2014 SEASONAL" if seasonal else "FINISHED / HISTORICAL"
+            rec["status_reason"] = ("GLATOS map status Finished"
+                                    + (" (seasonal deployment)" if seasonal else ""))
+        else:
+            recovs = sorted(rec["recovers"])
+            if recovs and recovs[-1] < "2024":
+                statuses[rid] = "FINISHED / HISTORICAL"
+                rec["status_reason"] = (f"last documented recovery {recovs[-1]}; "
+                                        "no current-status evidence")
+            else:
+                statuses[rid] = "UNCERTAIN"
+                rec["status_reason"] = "insufficient current-status evidence"
+        if statuses[rid] in ("ONLINE / DATA NOT PUBLIC",):
+            pass
+
+    # ---- live detail + 7-day detection history + species resolution ----
+    hist7_path = os.path.join(DATA, "detection_history.json")
+    hist7 = json.load(open(hist7_path)) if os.path.exists(hist7_path) else {}
+    lastknown_path = os.path.join(DATA, "last_known_species.json")
+    lastknown = json.load(open(lastknown_path)) if os.path.exists(lastknown_path) else {}
+    live_receivers, live_detections = [], []
+    per_rec = {}  # rid -> {species7:set, counts24:Counter, unres24:int, lu, ld}
     for rid, rec in receivers.items():
         st = rec.get("live")
         if st is None:
-            statuses[rid] = "OFFLINE"
-            rec["reason"] = ("No live feed in the USGS real-time network; "
-                             "last documented deployment retained below (not current).")
             continue
-        status, reason = classify_live(st, now_utc)
-        statuses[rid] = status
-        coords, _m = live_coords(st["sid"])
-        entry = {"receiver_id": rid, "receiver_name": rec["name"], "latitude": rec["lat"],
-                 "longitude": rec["lon"], "network": "USGS Real-Time Fish Telemetry",
-                 "source_url": LIVE_SUMMARY + (st["href"] or ""),
-                 "current_status": status, "status_timestamp": now_utc.isoformat(),
-                 "source_update_time": st["stamp_text"], "reason": reason,
-                 "sources": sorted(rec["sources"]), "source_urls": sorted(rec["source_urls"])}
-        detail = {"reason": reason}
-        if status == "ONLINE" and st.get("href"):
-            try:
-                page = fetch(LIVE_SUMMARY + st["href"])
-                lu, ld, events, uniq, tags = parse_station_page(page)
-                detail.update({"last_update": lu.strftime("%Y-%m-%d %H:%M:%S") if lu else st["stamp_text"],
-                               "last_detection": ld.strftime("%Y-%m-%d %H:%M:%S") if ld else None,
-                               "events": events, "uniq": uniq, "tag_counts": tags,
-                               "period": "previous 24 h"})
-                rec["live_detail"] = detail
-                live_detections.append({"receiver_id": rid, "reporting_period": detail["period"],
-                                        "unique_tags_24h": uniq, "detection_events_24h": events,
-                                        "tag_counts": tags})
-            except Exception as e:
-                detail.update({"last_update": st["stamp_text"], "events": 0, "uniq": 0,
-                               "tag_counts": {}, "fetch_error": str(e)})
-                rec["live_detail"] = detail
-        elif status == "OFFLINE":
-            detail.update({"last_update": st["stamp_text"], "tag_counts": {}})
-            rec["live_detail"] = detail
-        else:  # dismantled
-            rec["reason"] = reason
+        entry = {"receiver_id": rid, "receiver_name": rec["name"],
+                 "latitude": rec["lat"], "longitude": rec["lon"],
+                 "network": "USGS Real-Time Fish Telemetry",
+                 "source_url": LIVE_SUMMARY + (st.get("href") or ""),
+                 "current_status": statuses[rid],
+                 "status_timestamp": now_utc.isoformat(),
+                 "source_update_time": st["stamp_text"],
+                 "reason": rec.get("status_reason", ""),
+                 "sources": sorted(rec["sources"]),
+                 "source_urls": sorted(rec["source_urls"])}
         live_receivers.append(entry)
+        if statuses[rid] != "ONLINE":
+            lk = lastknown.get(rid)
+            lines = []
+            if lk:
+                lines = ([f"Reporting period: {lk['period']}"] +
+                         [f"{sp}: {lk['counts'].get(sp, 0)}" for sp in lk["order"]])
+            rec["desc_ctx"] = {"reason": rec.get("status_reason", ""),
+                               "last_update": st["stamp_text"],
+                               "last_known": lines or None}
+            continue
+        try:
+            page = fetch(LIVE_SUMMARY + st["href"])
+            lu, ld, _events, _uniq, _tags, rows = parse_station_page(page)
+        except Exception as e:
+            msg = f"{now_utc.isoformat()} station {st.get('href')} fetch failed: {e}"
+            failures.append(msg)
+            # SOURCE UNAVAILABLE: not evidence the receiver is offline. Keep last
+            # known good context; do not zero, do not reclassify.
+            lk = lastknown.get(rid, {})
+            rec["desc_ctx"] = {"reason": rec.get("status_reason", ""),
+                               "last_update": st["stamp_text"],
+                               "last_detection": (lk.get("last_detection") or "unavailable "
+                                                  "(live source temporarily unreachable)")}
+            with open(os.path.join(SOURCE, "fetch_failures.log"), "a") as f:
+                f.write(msg + "\n")
+            continue
+        if lu is None:
+            rec["desc_ctx"] = {"reason": rec.get("status_reason", ""),
+                               "last_update": st["stamp_text"]}
+            continue
+        H = hist7.setdefault(rid, [])
+        seen = {(h["t"], tuple(h["tags"])) for h in H}
+        for (trow, tc, _u, taglist) in rows:
+            key = (trow.strftime("%Y-%m-%d %H:%M:%S"), tuple(taglist))
+            if key not in seen:
+                H.append({"t": key[0], "events": tc, "tags": list(taglist)})
+                seen.add(key)
+        cutoff7 = lu - dt.timedelta(days=7)
+        H[:] = [h for h in H if dt.datetime.strptime(
+            h["t"], "%Y-%m-%d %H:%M:%S") >= cutoff7]
+        hist7[rid] = H
+        per_rec[rid] = {"lu": lu, "rows": H}
 
-    # status history (append transitions only)
+    # resolve every tag seen in any 7-day window (single batch; cache persists)
+    tags7_all = {tg for v in per_rec.values() for h in v["rows"] for tg in h["tags"]}
+    mapping = resolve_species(tags7_all, failures) if resolve_species else {}
+    from collections import Counter as _Counter
+    system_species_7d = set()
+    for rid, v in per_rec.items():
+        lu = v["lu"]
+        cutoff24 = lu - dt.timedelta(hours=24)
+        counts, species7, unres, last_det = _Counter(), set(), 0, None
+        for h in v["rows"]:
+            trow = dt.datetime.strptime(h["t"], "%Y-%m-%d %H:%M:%S")
+            resolved = [(tg, mapping[tg]["common"]) for tg in h["tags"]
+                        if mapping.get(tg, {}).get("common") not in (None, UNRESOLVED, "")]
+            n_unres = len(h["tags"]) - len(resolved)
+            if trow >= cutoff24 and h["events"] >= 0:
+                if resolved:
+                    share = h["events"] / len(resolved)
+                    for _tg, sp in resolved:
+                        counts[sp] += share
+                        species7.add(sp)
+                if n_unres:
+                    unres += (h["events"] / len(h["tags"]) if h["tags"] and h["events"]
+                              else 0)
+            for tg in h["tags"]:
+                c = mapping.get(tg, {}).get("common")
+                if c and c != UNRESOLVED:
+                    species7.add(c)
+            if h["tags"]:
+                last_det = h["t"] if last_det is None or h["t"] > last_det else last_det
+        counts = {sp: int(round(vv)) for sp, vv in counts.items()}
+        unres = int(round(unres))
+        system_species_7d.update(species7)
+        v.update({"species7": species7, "counts": counts, "unres": unres,
+                  "last_det": last_det})
+        lastknown[rid] = {"counts": counts, "unres": unres, "order": sorted(species7),
+                          "period": "previous 24 h",
+                          "timestamp": now_utc.isoformat(), "last_detection": last_det}
+        live_detections.append({"receiver_id": rid, "reporting_period": "previous 24 h",
+                                "species_counts_24h": counts,
+                                "unresolved_events_24h": unres,
+                                "last_detection": last_det})
+    system_order = sorted(system_species_7d)
+    for rid, v in per_rec.items():
+        rec = receivers[rid]
+        rec["desc_ctx"] = {
+            "last_update": v["lu"].strftime("%Y-%m-%d %H:%M:%S"),
+            "last_detection": v["last_det"] or "none in window",
+            "species_order": system_order,
+            "species_counts": {sp: v["counts"].get(sp, 0) for sp in system_order},
+            "unresolved_events": v["unres"]}
+    for rid, rec in receivers.items():
+        if rec.get("live") is None:
+            dep = sorted(rec["deploys"])
+            recov = sorted(rec["recovers"])
+            rec["desc_ctx"] = {
+                "reason": rec.get("status_reason", ""),
+                "last_deploy": dep[-1] if dep else None,
+                "last_recover": recov[-1] if recov else None}
+
+    # ---- status history (transitions only) ----
     hist_path = os.path.join(DATA, "receiver_status_history.json")
     hist = json.load(open(hist_path)) if os.path.exists(hist_path) else {}
     for rid, s in statuses.items():
@@ -610,7 +941,6 @@ def main():
         with open(os.path.join(DATA, name), "w") as f:
             json.dump(obj, f, indent=2, sort_keys=True, default=list)
 
-    # JSON-serializable receivers
     jrec = {}
     for rid, rec in receivers.items():
         jrec[rid] = {**rec, "sources": sorted(rec["sources"]),
@@ -618,36 +948,77 @@ def main():
                      "projects": sorted(rec["projects"]), "arrays": sorted(rec["arrays"]),
                      "models": sorted(rec["models"]), "deploys": sorted(rec["deploys"]),
                      "recovers": sorted(rec["recovers"]),
+                     "map_info": rec.get("map_info", []),
                      "current_status": statuses[rid]}
         jrec[rid].pop("live", None)
-        jrec[rid].pop("live_detail", None)
+        jrec[rid].pop("desc_ctx", None)
     dump("live_receivers.json", live_receivers)
     dump("live_detections.json", live_detections)
     dump("receiver_status_history.json", hist)
+    dump("detection_history.json", hist7)
+    dump("last_known_species.json", lastknown)
+    if failures:
+        with open(os.path.join(SOURCE, "fetch_failures.log"), "a") as f:
+            for line in failures:
+                f.write(line + "\n")
     with open(os.path.join(SOURCE, "provenance.json"), "w") as f:
-        json.dump({"generated_utc": now_utc.isoformat(), "live_version": live_version,
-                   "expected_update_hours": EXPECTED_UPDATE_HOURS,
-                   "stale_after_hours": STALE_AFTER_HOURS,
-                   "dedupe": {"exact_merges": stats["exact_merges"],
-                              "proximity_merges_150m": stats["proximity_merges"]},
-                   "excluded_no_coords": stats["excluded_no_coords"],
-                   "otn_error": stats.get("otn_error", ""),
-                   "sources": {
-                       "USGS_live": LIVE_SUMMARY,
-                       "GLATOS_redhorse": f"https://doi.org/{DOI_RED}",
-                       "GLATOS_sturgeon_HEC": "https://doi.org/10.5066/P142JQOJ",
-                       "OTN_ERDDAP": "https://erddap.oceantrack.org/erddap/tabledap/view_otn_aat_receivers"},
-                   "consulted_not_used": {
-                       "GLATOS_portal": "members-only login; no public bulk receiver file",
-                       "RAFT_map": "web app only; no public bulk receiver API found",
-                       "MI_DNR_Macatawa": "8 receivers announced without public coordinates",
-                       "USGS_salmon_10.5066/P1A8ZLWV": "no receiver-location table in release",
-                       "USGS_whitefish_10.5066/P9CWKQ4D": "no receiver-location table in release"}},
-                  f, indent=2)
+        json.dump({
+            "generated_utc": now_utc.isoformat(), "live_version": live_version,
+            "expected_update_hours": EXPECTED_UPDATE_HOURS,
+            "stale_after_hours": STALE_AFTER_HOURS,
+            "counting_method": ("per 5-minute row, VRTagCount events split evenly among "
+                                "resolved tags present; unresolved share counted separately; "
+                                "24 h reporting window; 7-day history retention with aging to 0"),
+            "species_method": ("RAFT transmitter lookup > OTN animal releases > USGS "
+                               "tag-metadata files; cache data/tag_species_cache.json, "
+                               "retried hourly; unresolvable tags stay UNRESOLVED_TAG"),
+            "merge_policy": ("exact receiver ID, or equivalent (ALPHA,NUMBER) station code "
+                             "across naming conventions with co-location; same code at distance "
+                             "kept as redeployed station; distinct station numbers never merged; "
+                             "live stations attach to nearest deployment record within 150 m"),
+            "dedupe": {"exact_merges": stats["exact_merges"],
+                       "token_merges": stats["proximity_merges"],
+                       "map_matched": stats.get("map_matched", 0),
+                       "map_added": stats.get("map_added", 0)},
+            "excluded_no_coords": stats["excluded_no_coords"],
+            "map_out_of_scope": stats.get("map_out_of_scope", []),
+            "otn_error": stats.get("otn_error", ""),
+            "map_error": stats.get("map_error", ""),
+            "species_failures_this_run": failures,
+            "system_species_7d": system_order,
+            "sources": {
+                "USGS_live": LIVE_SUMMARY,
+                "GLATOS_map": "https://glatos.org/map",
+                "GLATOS_redhorse": f"https://doi.org/{DOI_RED}",
+                "GLATOS_sturgeon_HEC": "https://doi.org/10.5066/P142JQOJ",
+                "OTN_ERDDAP": "https://erddap.oceantrack.org/erddap/tabledap/view_otn_aat_receivers",
+                "RAFT_lookup": "https://umesc-gisdb03.er.usgs.gov/raft/TransmitterLookup/SearchTags"},
+            "consulted_not_used": {
+                "RAFT_map": "web app only; no public bulk receiver API found",
+                "MI_DNR_Macatawa": "8 receivers announced without public coordinates",
+                "USGS_salmon_10.5066/P1A8ZLWV": "no receiver-location table in release",
+                "USGS_whitefish_10.5066/P9CWKQ4D": "no receiver-location table in release"}},
+            f, indent=2)
     json.dump({"live_version": live_version}, open(state_path, "w"), indent=2)
 
+    def write_kmz(kml_str, kmz_path):
+        icon_src = os.path.join(BASE, "icons", "fish_receiver.png")
+        with zipfile.ZipFile(kmz_path, "w", zipfile.ZIP_DEFLATED) as z:
+            z.writestr("doc.kml", kml_str)
+            z.write(icon_src, "icons/fish_receiver.png")
+
+    def publish(kml_str, base):
+        kml_path = os.path.join(KMLDIR, base + ".kml")
+        kmz_path = os.path.join(KMLDIR, base + ".kmz")
+        changed = True
+        if os.path.exists(kml_path):
+            changed = open(kml_path, encoding="utf-8").read() != kml_str
+        if changed:  # content-aware publish: never rewrite identical output
+            open(kml_path, "w", encoding="utf-8").write(kml_str)
+            write_kmz(kml_str, kmz_path)
+        return changed
+
     if args.test:
-        # single test placemark: Brady's Island live receiver (merged record if present)
         test = None
         for rid, rec in receivers.items():
             lv = rec.get("live") or {}
@@ -657,17 +1028,31 @@ def main():
         if test:
             rid, rec = test
             kml = build_kml({rid: rec}, {rid: statuses[rid]})
-            with open(os.path.join(KMLDIR, "TEST_SINGLE_RECEIVER.kml"), "w") as f:
-                f.write(kml)
+            publish(kml, "TEST_SINGLE_RECEIVER")
             print(f"test KML: {rid} status={statuses[rid]}")
+        # minimal icon test: one placemark + packaged icon, nothing else
+        mini = ("<?xml version='1.0' encoding='utf-8'?>\n"
+                '<kml xmlns="http://www.opengis.net/kml/2.2"><Document>'
+                "<name>ICON TEST</name>"
+                '<Style id="fishReceiver"><IconStyle><scale>1.0</scale>'
+                "<Icon><href>icons/fish_receiver.png</href></Icon></IconStyle></Style>"
+                "<Placemark><name>icon test</name><styleUrl>#fishReceiver</styleUrl>"
+                "<description>icon test</description>"
+                "<Point><coordinates>-83.11129,41.35264,0</coordinates></Point>"
+                "</Placemark></Document></kml>")
+        publish(mini, "ICON_TEST")
+        print("icon test KMZ written")
     if args.full:
         kml = build_kml(receivers, statuses)
-        with open(os.path.join(KMLDIR, "LIVE_GREAT_LAKES_FISH_ACOUSTIC_TELEMETRY_RECEIVERS.kml"), "w") as f:
-            f.write(kml)
+        changed = publish(kml, "LIVE_GREAT_LAKES_FISH_ACOUSTIC_TELEMETRY_RECEIVERS")
         from collections import Counter
-        print(f"full KML: {len(receivers)} placemarks; {dict(Counter(statuses.values()))}")
-        print(f"exact merges={stats['exact_merges']} proximity merges={stats['proximity_merges']} "
-              f"excluded={len(stats['excluded_no_coords'])}")
+        print(f"full KML: {len(receivers)} placemarks; {dict(Counter(statuses.values()))}; "
+              f"{'published' if changed else 'unchanged, not republished'}")
+        print(f"exact merges={stats['exact_merges']} token merges={stats['proximity_merges']} "
+              f"map matched={stats.get('map_matched', 0)} added={stats.get('map_added', 0)} "
+              f"excluded={len(stats['excluded_no_coords'])} "
+              f"system species={len(system_order)} unresolved-tags-seen="
+              f"{sum(1 for v in per_rec.values() if v['unres'])}")
     return 0
 
 
