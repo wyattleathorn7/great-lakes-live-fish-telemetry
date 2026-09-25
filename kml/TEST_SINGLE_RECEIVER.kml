@@ -17,8 +17,8 @@
 
 Receiver: LSR-021
 Status: ONLINE
-Last source update: 2026-09-25 10:00:00
-Last fish detection: 2026-09-25 10:00:00
+Last source update: 2026-09-25 11:00:00
+Last fish detection: 2026-09-25 11:00:00
 Reporting period: Previous 24 h
 
 FISH SPECIES DETECTIONS
@@ -52,7 +52,7 @@ White Sucker: 0
 Yellow Perch: 0
 Counts are tag detection events, not fish abundance.
 
-Data-quality note: 125 detection events from transmitters pending species identification are excluded above; see live_detections.json.
+Data-quality note: 127 detection events from transmitters pending species identification are excluded above; see live_detections.json.
 
 Receiver ID: GLATOS-LSR-021
 Network: USGS Real-Time Fish Telemetry + GLATOS/OTN deployments
