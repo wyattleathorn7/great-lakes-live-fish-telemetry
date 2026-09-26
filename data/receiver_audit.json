@@ -50,8 +50,8 @@
       "https://doi.org/10.5066/P142JQOJ",
       "https://glatos.org/map"
     ],
-    "last_known_detection": "2026-09-26 09:55:00",
-    "last_source_update": "2026-09-26 10:00:00 EST",
+    "last_known_detection": "2026-09-26 10:55:00",
+    "last_source_update": "2026-09-26 11:00:00 EST",
     "latitude": 41.35264,
     "longitude": -83.11129,
     "models": [
@@ -2596,8 +2596,8 @@
       "https://doi.org/10.5066/P142JQOJ",
       "https://glatos.org/map"
     ],
-    "last_known_detection": "2026-09-26 09:50:00",
-    "last_source_update": "2026-09-26 09:55:00 EST",
+    "last_known_detection": "2026-09-26 10:55:00",
+    "last_source_update": "2026-09-26 10:55:00 EST",
     "latitude": 41.43825,
     "longitude": -83.03791,
     "models": [
@@ -2625,7 +2625,7 @@
     "source_record_id": "412618083021701",
     "species_metadata_available": false,
     "species_resolved_detections_24h": 0,
-    "unresolved_detections_24h": 229
+    "unresolved_detections_24h": 234
   },
   {
     "arrays": [
@@ -326697,8 +326697,8 @@
       "https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/",
       "https://glatos.org/map"
     ],
-    "last_known_detection": "2026-09-26 09:05:00",
-    "last_source_update": "2026-09-26 09:10:00 CST",
+    "last_known_detection": "2026-09-26 10:05:00",
+    "last_source_update": "2026-09-26 10:10:00 CST",
     "latitude": 41.50032,
     "longitude": -88.10688,
     "models": [
@@ -326719,7 +326719,7 @@
     "source_record_id": "05538020",
     "species_metadata_available": false,
     "species_resolved_detections_24h": 0,
-    "unresolved_detections_24h": 141
+    "unresolved_detections_24h": 140
   },
   {
     "arrays": [
@@ -326768,8 +326768,8 @@
       "https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/",
       "https://glatos.org/map"
     ],
-    "last_known_detection": "2026-09-26 09:00:00",
-    "last_source_update": "2026-09-26 09:00:00 CST",
+    "last_known_detection": "2026-09-26 10:00:00",
+    "last_source_update": "2026-09-26 10:00:00 CST",
     "latitude": 41.50515,
     "longitude": -88.09981,
     "models": [
@@ -326789,7 +326789,7 @@
     "source_is_seasonal": false,
     "source_record_id": "05538010",
     "species_metadata_available": true,
-    "species_resolved_detections_24h": 1976,
+    "species_resolved_detections_24h": 2009,
     "unresolved_detections_24h": 9
   },
   {
@@ -326979,8 +326979,8 @@
       "https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/",
       "https://glatos.org/map"
     ],
-    "last_known_detection": "2026-09-26 09:00:00",
-    "last_source_update": "2026-09-26 09:00:00 CST",
+    "last_known_detection": "2026-09-26 10:00:00",
+    "last_source_update": "2026-09-26 10:00:00 CST",
     "latitude": 41.64032,
     "longitude": -88.06073,
     "models": [
@@ -327000,7 +327000,7 @@
     "source_is_seasonal": false,
     "source_record_id": "05536995",
     "species_metadata_available": true,
-    "species_resolved_detections_24h": 1364,
+    "species_resolved_detections_24h": 1380,
     "unresolved_detections_24h": 209
   },
   {
@@ -334817,8 +334817,8 @@
     "evidence_urls": [
       "https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/"
     ],
-    "last_known_detection": "2026-09-26 08:55:00",
-    "last_source_update": "2026-09-26 08:55:00 CST",
+    "last_known_detection": "2026-09-26 09:55:00",
+    "last_source_update": "2026-09-26 09:55:00 CST",
     "latitude": 41.69116667,
     "longitude": -87.9637778,
     "models": [],
@@ -334835,7 +334835,7 @@
     "source_record_id": "05536890",
     "species_metadata_available": false,
     "species_resolved_detections_24h": 0,
-    "unresolved_detections_24h": 127
+    "unresolved_detections_24h": 129
   },
   {
     "arrays": [],
@@ -334846,8 +334846,8 @@
     "evidence_urls": [
       "https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/"
     ],
-    "last_known_detection": "2026-09-26 09:00:00",
-    "last_source_update": "2026-09-26 09:00:00 CST",
+    "last_known_detection": "2026-09-26 09:55:00",
+    "last_source_update": "2026-09-26 10:00:00 CST",
     "latitude": 41.3948333,
     "longitude": -88.2693611,
     "models": [],
@@ -334875,8 +334875,8 @@
     "evidence_urls": [
       "https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/"
     ],
-    "last_known_detection": "2026-09-26 09:00:00",
-    "last_source_update": "2026-09-26 09:00:00 CST",
+    "last_known_detection": "2026-09-26 10:00:00",
+    "last_source_update": "2026-09-26 10:00:00 CST",
     "latitude": 41.39861111,
     "longitude": -88.27055556,
     "models": [],
@@ -334892,7 +334892,7 @@
     "source_is_seasonal": false,
     "source_record_id": "05541498",
     "species_metadata_available": true,
-    "species_resolved_detections_24h": 1162,
+    "species_resolved_detections_24h": 1148,
     "unresolved_detections_24h": 0
   },
   {
@@ -334904,8 +334904,8 @@
     "evidence_urls": [
       "https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/"
     ],
-    "last_known_detection": "2026-09-26 09:05:00",
-    "last_source_update": "2026-09-26 09:05:00 CST",
+    "last_known_detection": "2026-09-26 10:05:00",
+    "last_source_update": "2026-09-26 10:05:00 CST",
     "latitude": 41.33305556,
     "longitude": -88.4669444,
     "models": [],
@@ -334921,8 +334921,8 @@
     "source_is_seasonal": false,
     "source_record_id": "411955088280601",
     "species_metadata_available": true,
-    "species_resolved_detections_24h": 1444,
-    "unresolved_detections_24h": 348
+    "species_resolved_detections_24h": 1447,
+    "unresolved_detections_24h": 349
   },
   {
     "arrays": [],
@@ -334933,8 +334933,8 @@
     "evidence_urls": [
       "https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/"
     ],
-    "last_known_detection": "2026-09-26 08:55:00",
-    "last_source_update": "2026-09-26 08:55:00 CST",
+    "last_known_detection": "2026-09-26 09:55:00",
+    "last_source_update": "2026-09-26 09:55:00 CST",
     "latitude": 41.225833,
     "longitude": -91.086111,
     "models": [],
@@ -334950,7 +334950,7 @@
     "source_is_seasonal": false,
     "source_record_id": "411333091051000",
     "species_metadata_available": true,
-    "species_resolved_detections_24h": 1462,
+    "species_resolved_detections_24h": 1446,
     "unresolved_detections_24h": 0
   },
   {
@@ -334962,8 +334962,8 @@
     "evidence_urls": [
       "https://cm.water.usgs.gov/data/Fish_Tracks_Real_Time/"
     ],
-    "last_known_detection": "2026-09-26 08:35:00",
-    "last_source_update": "2026-09-26 08:55:00 CST",
+    "last_known_detection": "2026-09-26 09:50:00",
+    "last_source_update": "2026-09-26 09:55:00 CST",
     "latitude": 41.1925,
     "longitude": -91.0094444,
     "models": [],
@@ -334979,7 +334979,7 @@
     "source_is_seasonal": false,
     "source_record_id": "411133091003401",
     "species_metadata_available": true,
-    "species_resolved_detections_24h": 78,
+    "species_resolved_detections_24h": 83,
     "unresolved_detections_24h": 0
   },
   {
