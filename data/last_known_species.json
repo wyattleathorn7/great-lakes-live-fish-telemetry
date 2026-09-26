@@ -1,33 +1,33 @@
 {
   "GLATOS-LSR-002": {
     "counts": {},
-    "last_detection": "2026-09-25 23:55:00",
+    "last_detection": "2026-09-26 00:55:00",
     "order": [],
     "period": "previous 24 h",
-    "timestamp": "2026-09-26T06:31:49.627746+00:00",
-    "unres": 231
+    "timestamp": "2026-09-26T07:25:54.922053+00:00",
+    "unres": 226
   },
   "GLATOS-LSR-021": {
     "counts": {},
-    "last_detection": "2026-09-26 00:00:00",
+    "last_detection": "2026-09-26 00:55:00",
     "order": [],
     "period": "previous 24 h",
-    "timestamp": "2026-09-26T06:31:49.627746+00:00",
-    "unres": 142
+    "timestamp": "2026-09-26T07:25:54.922053+00:00",
+    "unres": 139
   },
   "GLATOSMAP-CRSAC-BRP-1": {
     "counts": {
-      "Common Carp": 1795,
-      "Common Carp/Goldfish": 183
+      "Common Carp": 1806,
+      "Common Carp/Goldfish": 186
     },
-    "last_detection": "2026-09-25 23:00:00",
+    "last_detection": "2026-09-26 00:00:00",
     "order": [
       "Common Carp",
       "Common Carp/Goldfish"
     ],
     "period": "previous 24 h",
-    "timestamp": "2026-09-26T06:31:49.627746+00:00",
-    "unres": 13
+    "timestamp": "2026-09-26T07:25:54.922053+00:00",
+    "unres": 11
   },
   "GLATOSMAP-CRSAC-DIP-3": {
     "counts": {},
@@ -36,29 +36,29 @@
       "Common Carp"
     ],
     "period": "previous 24 h",
-    "timestamp": "2026-09-26T06:31:49.627746+00:00",
+    "timestamp": "2026-09-26T07:25:54.922053+00:00",
     "unres": 142
   },
   "GLATOSMAP-CRSAC-LLP-6": {
     "counts": {
-      "Common Carp": 1303,
+      "Common Carp": 1321,
       "Common Carp/Goldfish": 15
     },
-    "last_detection": "2026-09-25 23:00:00",
+    "last_detection": "2026-09-25 23:55:00",
     "order": [
       "Common Carp",
       "Common Carp/Goldfish"
     ],
     "period": "previous 24 h",
-    "timestamp": "2026-09-26T06:31:49.627746+00:00",
-    "unres": 220
+    "timestamp": "2026-09-26T07:25:54.922053+00:00",
+    "unres": 219
   },
   "USGS-LIVE-05536890": {
     "counts": {},
-    "last_detection": "2026-09-25 22:55:00",
+    "last_detection": "2026-09-25 23:50:00",
     "order": [],
     "period": "previous 24 h",
-    "timestamp": "2026-09-26T06:31:49.627746+00:00",
+    "timestamp": "2026-09-26T07:25:54.922053+00:00",
     "unres": 128
   },
   "USGS-LIVE-05541498": {
@@ -73,48 +73,48 @@
       "Silver Carp"
     ],
     "period": "previous 24 h",
-    "timestamp": "2026-09-26T06:31:49.627746+00:00",
+    "timestamp": "2026-09-26T07:25:54.922053+00:00",
     "unres": 0
   },
   "USGS-LIVE-411133091003401": {
     "counts": {
-      "Silver Carp/Bighead Carp": 33
+      "Silver Carp/Bighead Carp": 39
     },
-    "last_detection": "2026-09-25 22:50:00",
+    "last_detection": "2026-09-25 23:55:00",
     "order": [
       "Bighead Carp",
       "Silver Carp",
       "Silver Carp/Bighead Carp"
     ],
     "period": "previous 24 h",
-    "timestamp": "2026-09-26T06:31:49.627746+00:00",
+    "timestamp": "2026-09-26T07:25:54.922053+00:00",
     "unres": 0
   },
   "USGS-LIVE-411333091051000": {
     "counts": {
-      "Bighead Carp": 415,
-      "Silver Carp": 1137
+      "Bighead Carp": 413,
+      "Silver Carp": 1132
     },
-    "last_detection": "2026-09-25 22:55:00",
+    "last_detection": "2026-09-25 23:55:00",
     "order": [
       "Bighead Carp",
       "Silver Carp"
     ],
     "period": "previous 24 h",
-    "timestamp": "2026-09-26T06:31:49.627746+00:00",
+    "timestamp": "2026-09-26T07:25:54.922053+00:00",
     "unres": 0
   },
   "USGS-LIVE-411955088280601": {
     "counts": {
-      "Silver Carp": 1430
+      "Silver Carp": 1434
     },
-    "last_detection": "2026-09-25 23:05:00",
+    "last_detection": "2026-09-26 00:05:00",
     "order": [
       "Silver Carp"
     ],
     "period": "previous 24 h",
-    "timestamp": "2026-09-26T06:31:49.627746+00:00",
-    "unres": 313
+    "timestamp": "2026-09-26T07:25:54.922053+00:00",
+    "unres": 310
   },
   "USGS-LIVE-412341088161001": {
     "counts": {},
@@ -123,7 +123,7 @@
       "Silver Carp"
     ],
     "period": "previous 24 h",
-    "timestamp": "2026-09-26T06:31:49.627746+00:00",
+    "timestamp": "2026-09-26T07:25:54.922053+00:00",
     "unres": 145
   }
 }
