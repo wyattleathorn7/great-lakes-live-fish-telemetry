@@ -51522,8 +51522,8 @@ Source:
 
 Receiver: LSR-002
 Status: ONLINE
-Last source update: 2026-09-30 17:55:00
-Last fish detection: 2026-09-30 17:45:00
+Last source update: 2026-09-30 23:55:00
+Last fish detection: 2026-09-30 23:55:00
 Reporting period: Previous 24 h
 
 FISH SPECIES DETECTIONS
@@ -51557,7 +51557,7 @@ White Sucker: 0
 Yellow Perch: 0
 Counts are tag detection events, not fish abundance.
 
-Data-quality note: 228 detection events from transmitters pending species identification are excluded above; see live_detections.json.
+Data-quality note: 229 detection events from transmitters pending species identification are excluded above; see live_detections.json.
 
 Receiver ID: GLATOS-LSR-002
 Network: USGS Real-Time Fish Telemetry + GLATOS/OTN deployments
@@ -52052,8 +52052,8 @@ Source:
 
 Receiver: LSR-021
 Status: ONLINE
-Last source update: 2026-09-30 18:00:00
-Last fish detection: 2026-09-30 17:55:00
+Last source update: 2026-10-01 00:00:00
+Last fish detection: 2026-09-30 23:20:00
 Reporting period: Previous 24 h
 
 FISH SPECIES DETECTIONS
@@ -52087,7 +52087,7 @@ White Sucker: 0
 Yellow Perch: 0
 Counts are tag detection events, not fish abundance.
 
-Data-quality note: 90 detection events from transmitters pending species identification are excluded above; see live_detections.json.
+Data-quality note: 88 detection events from transmitters pending species identification are excluded above; see live_detections.json.
 
 Receiver ID: GLATOS-LSR-021
 Network: USGS Real-Time Fish Telemetry + GLATOS/OTN deployments
@@ -118008,8 +118008,8 @@ Source:
 
 Receiver: BRP-1
 Status: ONLINE
-Last source update: 2026-09-30 17:00:00
-Last fish detection: 2026-09-30 16:35:00
+Last source update: 2026-09-30 23:00:00
+Last fish detection: 2026-09-30 23:00:00
 Reporting period: Previous 24 h
 
 FISH SPECIES DETECTIONS
@@ -118021,7 +118021,7 @@ Brook Trout: 0
 Brown Trout: 0
 Channel Catfish: 0
 Cisco: 0
-Common Carp: 1635
+Common Carp: 1709
 Freshwater Drum: 0
 Grass Carp: 0
 Lake Sturgeon: 0
@@ -118043,7 +118043,7 @@ White Sucker: 0
 Yellow Perch: 0
 Counts are tag detection events, not fish abundance.
 
-Data-quality note: 28 detection events from transmitters pending species identification are excluded above; see live_detections.json.
+Data-quality note: 30 detection events from transmitters pending species identification are excluded above; see live_detections.json.
 
 Receiver ID: GLATOSMAP-CRSAC-BRP-1
 Network: USGS Real-Time Fish Telemetry + GLATOS/OTN deployments
@@ -118156,8 +118156,8 @@ Source:
 
 Receiver: DIP-3
 Status: ONLINE
-Last source update: 2026-09-30 17:10:00
-Last fish detection: 2026-09-30 17:05:00
+Last source update: 2026-09-30 23:10:00
+Last fish detection: 2026-09-30 23:10:00
 Reporting period: Previous 24 h
 
 FISH SPECIES DETECTIONS
@@ -118169,7 +118169,7 @@ Brook Trout: 0
 Brown Trout: 0
 Channel Catfish: 0
 Cisco: 0
-Common Carp: 58
+Common Carp: 0
 Freshwater Drum: 0
 Grass Carp: 0
 Lake Sturgeon: 0
@@ -118191,7 +118191,7 @@ White Sucker: 0
 Yellow Perch: 0
 Counts are tag detection events, not fish abundance.
 
-Data-quality note: 152 detection events from transmitters pending species identification are excluded above; see live_detections.json.
+Data-quality note: 146 detection events from transmitters pending species identification are excluded above; see live_detections.json.
 
 Receiver ID: GLATOSMAP-CRSAC-DIP-3
 Network: USGS Real-Time Fish Telemetry + GLATOS/OTN deployments
@@ -118327,8 +118327,8 @@ Source:
 
 Receiver: LLP-6
 Status: ONLINE
-Last source update: 2026-09-30 17:00:00
-Last fish detection: 2026-09-30 17:00:00
+Last source update: 2026-09-30 23:00:00
+Last fish detection: 2026-09-30 23:00:00
 Reporting period: Previous 24 h
 
 FISH SPECIES DETECTIONS
@@ -118340,7 +118340,7 @@ Brook Trout: 0
 Brown Trout: 0
 Channel Catfish: 0
 Cisco: 0
-Common Carp: 899
+Common Carp: 880
 Freshwater Drum: 0
 Grass Carp: 0
 Lake Sturgeon: 0
@@ -118362,7 +118362,7 @@ White Sucker: 0
 Yellow Perch: 0
 Counts are tag detection events, not fish abundance.
 
-Data-quality note: 178 detection events from transmitters pending species identification are excluded above; see live_detections.json.
+Data-quality note: 166 detection events from transmitters pending species identification are excluded above; see live_detections.json.
 
 Receiver ID: GLATOSMAP-CRSAC-LLP-6
 Network: USGS Real-Time Fish Telemetry + GLATOS/OTN deployments
@@ -219345,8 +219345,8 @@ Source:
 
 Receiver: CHICAGO SANITARY AND SHIP CANAL NR LEMONT, IL
 Status: ONLINE
-Last source update: 2026-09-30 16:55:00
-Last fish detection: 2026-09-30 16:55:00
+Last source update: 2026-09-30 22:55:00
+Last fish detection: 2026-09-30 22:55:00
 Reporting period: Previous 24 h
 
 FISH SPECIES DETECTIONS
@@ -219380,7 +219380,7 @@ White Sucker: 0
 Yellow Perch: 0
 Counts are tag detection events, not fish abundance.
 
-Data-quality note: 135 detection events from transmitters pending species identification are excluded above; see live_detections.json.
+Data-quality note: 136 detection events from transmitters pending species identification are excluded above; see live_detections.json.
 
 Receiver ID: USGS-LIVE-05536890
 Network: USGS Real-Time Fish Telemetry
@@ -219399,15 +219399,15 @@ Source:
 
 Receiver: ILLINOIS RIVER ABOVE DRESDEN ISLAND DAM NEAR MINOOKA, IL
 Status: ONLINE
-Last source update: 2026-09-30 17:00:00
-Last fish detection: 2026-09-30 17:00:00
+Last source update: 2026-09-30 23:00:00
+Last fish detection: 2026-09-30 23:00:00
 Reporting period: Previous 24 h
 
 FISH SPECIES DETECTIONS
 Alewife: 0
 American Eel: 0
 Atlantic Salmon: 0
-Bighead Carp: 291
+Bighead Carp: 267
 Brook Trout: 0
 Brown Trout: 0
 Channel Catfish: 0
@@ -219423,7 +219423,7 @@ Northern Pike: 0
 Round Whitefish: 0
 Sea Lamprey: 0
 Shorthead Redhorse: 0
-Silver Carp: 1143
+Silver Carp: 1171
 Silver Redhorse: 0
 Smallmouth Bass: 0
 Smallmouth Buffalo: 0
@@ -219433,6 +219433,8 @@ White Bass: 0
 White Sucker: 0
 Yellow Perch: 0
 Counts are tag detection events, not fish abundance.
+
+Data-quality note: 2 detection events from transmitters pending species identification are excluded above; see live_detections.json.
 
 Receiver ID: USGS-LIVE-05541498
 Network: USGS Real-Time Fish Telemetry
@@ -219473,7 +219475,7 @@ Source:
 
 Receiver: ELIZA CREEK AT BOSTON BAY (P18) AT NEW BOSTON, IL
 Status: ONLINE
-Last source update: 2026-09-30 16:55:00
+Last source update: 2026-09-30 22:55:00
 Last fish detection: 2026-09-27 00:40:00
 Reporting period: Previous 24 h
 
@@ -219525,15 +219527,15 @@ Source:
 
 Receiver: CLEVELAND SLOUGH (P17) NEAR PORT LOUISA, IA
 Status: ONLINE
-Last source update: 2026-09-30 16:55:00
-Last fish detection: 2026-09-30 16:20:00
+Last source update: 2026-09-30 22:55:00
+Last fish detection: 2026-09-30 20:30:00
 Reporting period: Previous 24 h
 
 FISH SPECIES DETECTIONS
 Alewife: 0
 American Eel: 0
 Atlantic Salmon: 0
-Bighead Carp: 81
+Bighead Carp: 50
 Brook Trout: 0
 Brown Trout: 0
 Channel Catfish: 0
@@ -219549,7 +219551,7 @@ Northern Pike: 0
 Round Whitefish: 0
 Sea Lamprey: 0
 Shorthead Redhorse: 0
-Silver Carp: 442
+Silver Carp: 460
 Silver Redhorse: 0
 Smallmouth Bass: 0
 Smallmouth Buffalo: 0
@@ -219577,8 +219579,8 @@ Source:
 
 Receiver: HANSON GRAVEL WEST PIT AT CULVERT NR MORRIS, IL
 Status: ONLINE
-Last source update: 2026-09-30 17:05:00
-Last fish detection: 2026-09-30 17:05:00
+Last source update: 2026-09-30 23:05:00
+Last fish detection: 2026-09-30 23:05:00
 Reporting period: Previous 24 h
 
 FISH SPECIES DETECTIONS
@@ -219601,7 +219603,7 @@ Northern Pike: 0
 Round Whitefish: 0
 Sea Lamprey: 0
 Shorthead Redhorse: 0
-Silver Carp: 968
+Silver Carp: 980
 Silver Redhorse: 0
 Smallmouth Bass: 0
 Smallmouth Buffalo: 0
@@ -219612,7 +219614,7 @@ White Sucker: 0
 Yellow Perch: 0
 Counts are tag detection events, not fish abundance.
 
-Data-quality note: 152 detection events from transmitters pending species identification are excluded above; see live_detections.json.
+Data-quality note: 208 detection events from transmitters pending species identification are excluded above; see live_detections.json.
 
 Receiver ID: USGS-LIVE-411955088280601
 Network: USGS Real-Time Fish Telemetry
@@ -219631,15 +219633,15 @@ Source:
 
 Receiver: DRESDEN GENERATING STATION OUTFALL NR MINOOKA, IL
 Status: ONLINE
-Last source update: 2026-09-30 17:00:00
-Last fish detection: 2026-09-30 17:00:00
+Last source update: 2026-09-30 23:00:00
+Last fish detection: 2026-09-30 23:00:00
 Reporting period: Previous 24 h
 
 FISH SPECIES DETECTIONS
 Alewife: 0
 American Eel: 0
 Atlantic Salmon: 0
-Bighead Carp: 0
+Bighead Carp: 97
 Brook Trout: 0
 Brown Trout: 0
 Channel Catfish: 0
@@ -219666,7 +219668,7 @@ White Sucker: 0
 Yellow Perch: 0
 Counts are tag detection events, not fish abundance.
 
-Data-quality note: 142 detection events from transmitters pending species identification are excluded above; see live_detections.json.
+Data-quality note: 144 detection events from transmitters pending species identification are excluded above; see live_detections.json.
 
 Receiver ID: USGS-LIVE-412341088161001
 Network: USGS Real-Time Fish Telemetry
