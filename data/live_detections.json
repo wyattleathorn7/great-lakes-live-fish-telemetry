@@ -1,90 +1,90 @@
 [
   {
-    "last_detection": "2026-10-02 09:50:00",
+    "last_detection": "2026-10-02 14:55:00",
     "receiver_id": "GLATOS-LSR-021",
     "reporting_period": "previous 24 h",
     "species_counts_24h": {},
-    "unresolved_events_24h": 43
+    "unresolved_events_24h": 62
   },
   {
-    "last_detection": "2026-10-02 09:55:00",
+    "last_detection": "2026-10-02 14:55:00",
     "receiver_id": "GLATOS-LSR-002",
     "reporting_period": "previous 24 h",
     "species_counts_24h": {},
-    "unresolved_events_24h": 208
+    "unresolved_events_24h": 206
   },
   {
-    "last_detection": "2026-10-02 09:10:00",
+    "last_detection": "2026-10-02 14:10:00",
     "receiver_id": "GLATOSMAP-CRSAC-DIP-3",
     "reporting_period": "previous 24 h",
     "species_counts_24h": {
-      "Common Carp": 34
+      "Common Carp": 32
     },
     "unresolved_events_24h": 138
   },
   {
-    "last_detection": "2026-10-02 09:00:00",
+    "last_detection": "2026-10-02 14:00:00",
     "receiver_id": "GLATOSMAP-CRSAC-BRP-1",
     "reporting_period": "previous 24 h",
     "species_counts_24h": {
-      "Common Carp": 1125,
-      "Common Carp/Goldfish": 276
+      "Common Carp": 1089,
+      "Common Carp/Goldfish": 246
     },
-    "unresolved_events_24h": 32
+    "unresolved_events_24h": 28
   },
   {
-    "last_detection": "2026-10-02 09:00:00",
+    "last_detection": "2026-10-02 14:00:00",
     "receiver_id": "GLATOSMAP-CRSAC-LLP-6",
     "reporting_period": "previous 24 h",
     "species_counts_24h": {
-      "Common Carp": 1137,
-      "Common Carp/Goldfish": 2
+      "Common Carp": 1261,
+      "Common Carp/Goldfish": 8
     },
-    "unresolved_events_24h": 241
+    "unresolved_events_24h": 268
   },
   {
-    "last_detection": "2026-10-02 08:55:00",
+    "last_detection": "2026-10-02 13:50:00",
     "receiver_id": "USGS-LIVE-05536890",
     "reporting_period": "previous 24 h",
     "species_counts_24h": {},
-    "unresolved_events_24h": 129
+    "unresolved_events_24h": 132
   },
   {
-    "last_detection": "2026-10-02 09:00:00",
+    "last_detection": "2026-10-02 14:00:00",
     "receiver_id": "USGS-LIVE-412341088161001",
     "reporting_period": "previous 24 h",
     "species_counts_24h": {
       "Bighead Carp": 312,
-      "Silver Carp": 114
+      "Silver Carp": 293
     },
-    "unresolved_events_24h": 188
+    "unresolved_events_24h": 207
   },
   {
-    "last_detection": "2026-10-02 09:00:00",
+    "last_detection": "2026-10-02 14:00:00",
     "receiver_id": "USGS-LIVE-05541498",
     "reporting_period": "previous 24 h",
     "species_counts_24h": {
-      "Bighead Carp": 240,
-      "Silver Carp": 1053
+      "Bighead Carp": 247,
+      "Silver Carp": 1128
     },
     "unresolved_events_24h": 0
   },
   {
-    "last_detection": "2026-10-02 09:05:00",
+    "last_detection": "2026-10-02 14:05:00",
     "receiver_id": "USGS-LIVE-411955088280601",
     "reporting_period": "previous 24 h",
     "species_counts_24h": {
-      "Silver Carp": 1237
+      "Silver Carp": 1231
     },
-    "unresolved_events_24h": 276
+    "unresolved_events_24h": 258
   },
   {
-    "last_detection": "2026-10-02 08:55:00",
+    "last_detection": "2026-10-02 13:55:00",
     "receiver_id": "USGS-LIVE-411333091051000",
     "reporting_period": "previous 24 h",
     "species_counts_24h": {
-      "Bighead Carp": 389,
-      "Silver Carp": 437
+      "Bighead Carp": 385,
+      "Silver Carp": 580
     },
     "unresolved_events_24h": 0
   },
