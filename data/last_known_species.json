@@ -1,84 +1,84 @@
 {
   "GLATOS-LSR-002": {
     "counts": {},
-    "last_detection": "2026-10-03 10:55:00",
+    "last_detection": "2026-10-03 13:55:00",
     "order": [],
     "period": "previous 24 h",
-    "timestamp": "2026-10-03T17:17:11.258827+00:00",
-    "unres": 223
+    "timestamp": "2026-10-03T19:56:51.152093+00:00",
+    "unres": 229
   },
   "GLATOS-LSR-021": {
     "counts": {},
-    "last_detection": "2026-10-03 10:50:00",
+    "last_detection": "2026-10-03 13:55:00",
     "order": [],
     "period": "previous 24 h",
-    "timestamp": "2026-10-03T17:17:11.258827+00:00",
-    "unres": 123
+    "timestamp": "2026-10-03T19:56:51.152093+00:00",
+    "unres": 119
   },
   "GLATOSMAP-CRSAC-BRP-1": {
     "counts": {
-      "Common Carp": 1753,
-      "Common Carp/Goldfish": 155
+      "Common Carp": 1817,
+      "Common Carp/Goldfish": 147
     },
-    "last_detection": "2026-10-03 10:00:00",
+    "last_detection": "2026-10-03 13:00:00",
     "order": [
       "Common Carp",
       "Common Carp/Goldfish"
     ],
     "period": "previous 24 h",
-    "timestamp": "2026-10-03T17:17:11.258827+00:00",
+    "timestamp": "2026-10-03T19:56:51.152093+00:00",
     "unres": 5
   },
   "GLATOSMAP-CRSAC-DIP-3": {
     "counts": {
-      "Common Carp": 67
+      "Common Carp": 102
     },
-    "last_detection": "2026-10-03 10:10:00",
+    "last_detection": "2026-10-03 13:00:00",
     "order": [
       "Common Carp"
     ],
     "period": "previous 24 h",
-    "timestamp": "2026-10-03T17:17:11.258827+00:00",
-    "unres": 144
+    "timestamp": "2026-10-03T19:56:51.152093+00:00",
+    "unres": 148
   },
   "GLATOSMAP-CRSAC-LLP-6": {
     "counts": {
-      "Common Carp": 1438,
-      "Common Carp/Goldfish": 83
+      "Common Carp": 1379,
+      "Common Carp/Goldfish": 81
     },
-    "last_detection": "2026-10-03 10:00:00",
+    "last_detection": "2026-10-03 13:00:00",
     "order": [
       "Common Carp",
       "Common Carp/Goldfish"
     ],
     "period": "previous 24 h",
-    "timestamp": "2026-10-03T17:17:11.258827+00:00",
-    "unres": 273
+    "timestamp": "2026-10-03T19:56:51.152093+00:00",
+    "unres": 254
   },
   "USGS-LIVE-05536890": {
     "counts": {
       "Silver Carp": 1
     },
-    "last_detection": "2026-10-03 09:55:00",
+    "last_detection": "2026-10-03 12:55:00",
     "order": [
       "Silver Carp"
     ],
     "period": "previous 24 h",
-    "timestamp": "2026-10-03T17:17:11.258827+00:00",
+    "timestamp": "2026-10-03T19:56:51.152093+00:00",
     "unres": 120
   },
   "USGS-LIVE-05541498": {
     "counts": {
-      "Bighead Carp": 246,
-      "Silver Carp": 1496
+      "Bighead Carp": 249,
+      "Silver Carp": 1484
     },
-    "last_detection": "2026-10-03 10:00:00",
+    "last_detection": "2026-10-03 13:00:00",
     "order": [
       "Bighead Carp",
       "Silver Carp"
     ],
     "period": "previous 24 h",
-    "timestamp": "2026-10-03T17:17:11.258827+00:00",
+    "timestamp": "2026-10-03T19:56:51.152093+00:00",
     "unres": 0
   },
   "USGS-LIVE-411133091003401": {
@@ -91,47 +91,47 @@
       "Silver Carp/Bighead Carp"
     ],
     "period": "previous 24 h",
-    "timestamp": "2026-10-03T17:17:11.258827+00:00",
+    "timestamp": "2026-10-03T19:56:51.152093+00:00",
     "unres": 0
   },
   "USGS-LIVE-411333091051000": {
     "counts": {
       "Bighead Carp": 289,
-      "Silver Carp": 1377
+      "Silver Carp": 1499
     },
-    "last_detection": "2026-10-03 09:55:00",
+    "last_detection": "2026-10-03 12:55:00",
     "order": [
       "Bighead Carp",
       "Silver Carp"
     ],
     "period": "previous 24 h",
-    "timestamp": "2026-10-03T17:17:11.258827+00:00",
-    "unres": 0
+    "timestamp": "2026-10-03T19:56:51.152093+00:00",
+    "unres": 2
   },
   "USGS-LIVE-411955088280601": {
     "counts": {
-      "Silver Carp": 1444
+      "Silver Carp": 1451
     },
-    "last_detection": "2026-10-03 10:05:00",
+    "last_detection": "2026-10-03 13:05:00",
     "order": [
       "Silver Carp"
     ],
     "period": "previous 24 h",
-    "timestamp": "2026-10-03T17:17:11.258827+00:00",
-    "unres": 330
+    "timestamp": "2026-10-03T19:56:51.152093+00:00",
+    "unres": 345
   },
   "USGS-LIVE-412341088161001": {
     "counts": {
       "Bighead Carp": 226,
-      "Silver Carp": 668
+      "Silver Carp": 653
     },
-    "last_detection": "2026-10-03 10:00:00",
+    "last_detection": "2026-10-03 13:00:00",
     "order": [
       "Bighead Carp",
       "Silver Carp"
     ],
     "period": "previous 24 h",
-    "timestamp": "2026-10-03T17:17:11.258827+00:00",
-    "unres": 212
+    "timestamp": "2026-10-03T19:56:51.152093+00:00",
+    "unres": 209
   }
 }
